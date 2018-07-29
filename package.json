@@ -1,0 +1,19 @@
+{
+  "name": "digitaliza-front",
+  "version": "1.0.0",
+  "description": "Front-end do digitaliza.org",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://felipelima94@bitbucket.org/senhoresdotcc/digitaliza-front.git"
+  },
+  "author": "Felipe Lima",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/senhoresdotcc/digitaliza-front#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
