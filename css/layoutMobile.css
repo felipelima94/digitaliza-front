@@ -1,0 +1,81 @@
+@media screen and (max-width: 876px) {
+    * {
+        max-width: 100%;
+    }
+    body {
+        background: #FFF;
+    }
+    .header {
+        height: auto;
+        display: grid;
+        grid-template-areas: "menu logo userPic";
+        box-shadow: rgba(0,0,0,0.5) 0 0 5px;
+    }
+    .header .menu {
+        grid-area: menu;
+        display: block;
+        width: 65px;
+        height: 65px;
+        background: url('../img/menuIcon.png') no-repeat center;
+        background-size: contain;
+    }
+    .header .logo {
+        grid-area: logo;
+        height: 65px;
+        margin: 0;
+    }
+    .header .right {
+        grid-area: userPic;
+    }
+    .header .userInfo .userName {
+        display: none;
+    }
+    .header .userInfo .userPhoto {
+        width: 50px;
+        height: 50px;
+    }
+    .header .search {
+        display: none
+    }
+    .page .search {
+        margin-top: 15px;
+        width: 100%;
+    }
+    .page .search .inputSearch {
+        width: 80%;
+    }
+    .page .search .btnBuscar {
+        background-color: #6699FF;
+    }
+    /* gambiarra para mostrar a barra de pesquisa */
+    .page .mobile {
+        display: flex;
+    }
+    /* ocultar menu */
+    .page .nav {
+        display: none;
+    }
+
+    /* lista de arquivos */
+    .content {
+        padding: 0;
+    }
+    .tableFiles .rowTableFile {
+        grid-template-columns: 55px 2fr 1fr;
+        grid-gap: 10px;
+    }
+    .tableFiles .rowTableFile .td {
+        padding: 0 5px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .rowTableFile .td:nth-child(n+3):nth-child(-n+4) {
+        display: none;
+    }
+    .rowTableFile .td:last-child {
+        float: right;
+    }
+    .tableFiles .rowTableFile .iconFile {
+        width: 55px;
+    }
+}

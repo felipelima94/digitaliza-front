@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.page .mobile {
+    display: none;
+}
+
+body {
+    background-color: #E1E1E1;
+}
+.page {
+    display: grid;
+    grid-template-areas: "header" "nav" "content";
+}
+
+/* cabecario */
+.header {
+    height: 95px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #6699FF;
+    padding: 5px;
+    color: #222222;
+    z-index: 10;
+}
+.header .menu {
+    display: none;
+}
+.header .logo {
+    width: 220px;
+    height: 94px;
+    background-image: url('../img/logo.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 20px;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+}
+.search .inputSearch {
+    width: 60%;
+    height: 40px;
+    border-style: none;
+    border-radius: 5px;
+    padding: 0 45px 0 15px;
+    font-size: 1.3em;
+    color: #707070;
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+}
+.search .inputSearch:focus {
+    color: #222222;
+    box-shadow: #B8D0FF 0 0 5px;
+}
+.search .btnBuscar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-left: -40px;
+    border-radius: 5px;
+    border-style: none;
+    background: #B8D0FF url("../img/lupa.png") no-repeat center;
+    background-size: 30px auto;
+    display: inline-block;
+}
+
+.header .right .userInfo {
+    margin: 0 15px 0 0;
+    display: flex;
+    align-items: center;
+}
+.header .userInfo .userName {
+    display: inline-block;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+.header .userInfo .userPhoto {
+    width: 60px;
+    height: 60px;
+    margin-left: 5px;
+    border: solid 0.1em #707070;
+    border-radius: 50%;
+    background: url("../img/UserPhoto.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: inline-block;
+}
+
+/* menu Navegacao */
+.nav {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    background-color: #FFF;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 2px 6px;
+    z-index: 5;
+}
+.nav .navegacao {
+    display: flex;
+    font-weight: bold;
+    color: #707070;
+}
+/* conteudo */
+.content {
+    grid-area: content;
+    padding: 30px;
+    z-index: 1;
+}
+/* tabela > listagem de arquivo */
+.tableFiles .th {
+    color: #707070;
+    font-weight: bold;
+}
+.tableFiles .tr:nth-child(even) {
+    background-color: #EEEEEE;
+}
+.tableFiles .tr:nth-child(odd) {
+    background-color: #F9F9F9F9;
+}
+.tableFiles .rowTableFile {
+    height: 46px;
+    display: grid;
+    grid-template-columns: 55px 2fr 1fr 1fr 1fr;
+    align-items: center;
+    font-size: 1em;
+    color: #666666;
+}
+.tableFiles .td {
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+}
+.tableFiles .rowTableFile .iconFile {
+    height: 46px;
+    width: 55px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 30px;
+}

@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222222;
+}
+.page {
+    display: grid;
+    grid-template-rows: 110px calc(100vh - 110px);
+    grid-template-columns: 270px 1fr;
+    grid-template-areas: "header header" "aside content";
+}
+
+/* cabecario */
+.header {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: auto 1fr 40px auto;
+    background-color: #6699FF;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 2px 6px;
+    z-index: 999;
+}
+
+.header .logo {
+    font-size:4em
+}
+
+.header .search {
+    text-align: center;
+}
+.header .inputSearch {
+    width: 60%;
+    height: 40px;
+    margin-top: 30px;
+    border-style: none;
+    border-radius: 5px;
+    padding: 0 45px 0 15px;
+    font-size: 1.3em;
+    display: inline-block;
+}
+.header .btnBuscar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin: 0px 0px -13px -44px;
+    border-radius: 5px;
+    border-style: none;
+    background: #B8D0FF url("../img/lupa.png") no-repeat center;
+    background-size: 30px auto;
+    display: inline-block;
+}
+.header .btnUpload  {
+    margin: 35px -15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #B8D0FF url("../img/UploadIcon.png") no-repeat center;
+    background-size: auto 30px;
+}
+.header .userInfo {
+    text-align: right;
+}
+.header .userInfo .userName {
+    display: inline-block;
+    font-size: 1em;
+    font-weight: bold;
+}
+.header .userInfo .userPhoto {
+    width: 60px;
+    height: 60px;
+    margin: 25px 10px -23px 10px;
+    border-radius: 50%;
+    background: url("../img/UserPhoto.png") no-repeat center;
+    background-size: 60px 60px;
+    display: inline-block;
+}
+
+/* barra lateral */
+.sideBar {
+    grid-area: aside;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 2px 6px;
+    z-index: 990;
+}
+.sideBar .newFolder {
+    margin: 10px 0 0 0;
+    padding: 10px;
+}
+.sideBar a.btnNewFolder {
+    text-decoration: none;
+    background: #ddd;
+}
+.sideBar .newFolder img {
+    width: 25px;
+    display: inline-block;
+    margin: 5px 5px -5px 10px;
+}
+.sideBar .newFolder p {
+    display: inline-block;
+}
+.sideBar .folder {
+    margin: 10px 0 0 0;
+    width: 100%;
+}
+.sideBar .folder li {
+    padding: 15px 10px;
+    margin-top: 5px;
+    font-weight: 600;
+}
+/* estilo qnd estiver sobre e ativo */
+.sideBar .folder li:hover, .sideBar .folder li.active{
+    border-bottom: #dddddd 2px solid;
+    margin-bottom: -2px;
+}
+.sideBar .folder a {
+    text-decoration: none;
+}
+.sideBar .folder li img {
+    height: 30px;
+    display: inline-block;
+    margin: 5px 5px -10px 5px;
+}
+.sideBar .folder li p {
+    display: inline-block;
+}
+
+/* conteudo */
+.content {
+    grid-area: content;
+    padding: 10px;
+}

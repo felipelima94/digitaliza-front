@@ -1,0 +1,95 @@
+<title>Digitaliza.org</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<link type="text/css" rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/layoutMobile.css">
+<link type="text/css" rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/menu.css">
+<link rel="stylesheet" href="css/modal.css">
+
+
+<div class="page">
+    <header class="header" ng-controller="userControll">
+        <nav class="menu"></nav>
+        <div class="logo">
+            <!-- <img src="img/logo.png" alt="Logo"> -->
+        </div>
+        <div class="middle search">
+            <input type="text" name="q" class="inputSearch" placeholder="Pesquisar" />
+            <div class="btnBuscar"></div>
+        </div>
+        <div class="right">
+            <div class="userInfo">
+                <div class="userName">{{ user.name }}</div>
+                <div class="userPhoto" style="background-image: url('{{user.pic}}')"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile search">
+        <input type="text" name="q" class="inputSearch" placeholder="Pesquisar" />
+        <div class="btnBuscar"></div>
+    </div>
+
+    <!-- Menu gerenciamento -->
+    <nav class="nav">
+        <div class="dropdown">
+            <button id="dropbtn" onclick="myFunction()" class="btn btn-blue">Novo</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="#novapasta" rel="modal"><div class="icon-folder"></div><p>Nova Pasta</p></a>
+                    <a href="#upload" rel="modal"><div class="icon-doc"></div><p>Enviar arquivos</p></a>
+                    <a href="#digitalizar" rel="modal"><div class="icon-digi"></div><p>Nova Digitalizar</p></a>
+                </div>
+        </div>
+        <div class="navegacao">
+            <p>Home</p>
+            <p>&nbsp;>&nbsp;</p>
+            <p>Diretorio</p>
+        </div>
+    </nav>
+
+    <!-- Conteudo: pastas, docs... -->
+    <section class="content">
+        <div ng-controller="listFiles" class="tableFiles">
+            
+            <div class="rowTableFile th">
+                <div class="td iconFile"></div>
+                <div class="td pointer" ng-click="orderByName(myOrderByName)">Nome {{ arrowOrder }}</div>
+                <div class="td">Autor</div>
+                <div class="td">Data de modificação</div>
+                <div class="td">Tamanho</div>
+            </div>
+
+            <div  ng-repeat="file in files | orderBy : myOrderByName |  filter : {name : inputSearch }" class="tr">
+                <div class="rowTableFile">
+                    <div class="td iconFile" style="background-image: url('{{file.type}}')"></div>
+                    <div class="td">{{ file.name }}</div>
+                    <div class="td">{{ file.author }}</div>
+                    <div class="td">{{ file.date }}</div>
+                    <div class="td">{{ file.size }}</div>
+                </div>
+            </div>
+
+        </div> <!-- tableFiles -->
+    </section>
+</div>
+
+<!-- Cria o modal para cada item do menu -->
+<div id="mascara"></div>
+<div id="novapasta" class="window">
+    <div>
+        <h4>Criar nova pasta</h4>
+        <a href="#" class="fechar">X</a>
+    </div>
+</div>
+<div id="upload" class="window">
+    <div>
+        <h4>Enviar novos arquivos</h4>
+        <a href="#" class="fechar">X</a>
+    </div>
+</div>
+<div id="digitalizar" class="window">
+    <div>
+        <h4>Digitalizar</h4>
+        <a href="#" class="fechar">X</a>
+    </div>
+</div>

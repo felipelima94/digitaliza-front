@@ -1,0 +1,25 @@
+/* estilos genericos global */
+/* botões */
+.btn {
+    padding: 5px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.3em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.btn:focus {
+    background: rgb(84, 127, 214);
+}
+
+/* estilos */
+.btn-blue {
+    background-color: #6699FF;
+    color: #FFF;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+}
+.pointer {
+    cursor: pointer;
+}
