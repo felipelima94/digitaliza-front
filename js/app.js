@@ -8,7 +8,10 @@ var app = angular.module("app", ["ngRoute"])
             .when('/cadastrar', {
                 templateUrl: 'views/cadastrar.html'
             })
-            .otherwise({redirectTo : '/files'});
+            .when('/home', {
+                templateUrl: "views/home.html"
+            })
+            .otherwise({redirectTo : '/home'});
 
         $locationProvider.html5Mode(true);
         });
