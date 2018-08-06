@@ -2,7 +2,9 @@
 <link rel="stylesheet" href="css/home-layout.css">
 
 <!-- import scripts -->
-<section id="home">
+
+<!-- html template -->
+<section id="home" ng-app="home">
     <div class="head">
         <div class="desc">
             <!-- <div class="logo"></div> -->
@@ -17,12 +19,10 @@
             <a href="" class="accessLink"><div><div class="iconSingIn"></div>Cadastrar</div></a>
             <a href="" class="accessLink"><div><div class="iconSingUp"></div>Entrar</div></a>
         </div>
-    </div>
-    
-
-    <div class="content">
+    </div> <!-- end of head div -->
+    <div class="content" ng-controller="body">
         <header class="title-about">Sobre a Empresa</header>
-        <div class="home-about">
+        <div class="home-about" ng-include="{{template.url}}">
             O Lorem Ipsum é um texto modelo da indústria tipográfica e de impressão. O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres de um texto para criar um espécime de livro. Este texto não só sobreviveu 5 séculos, mas também o salto para a tipografia electrónica, mantendo-se essencialmente inalterada. Foi popularizada nos anos 60 com a disponibilização das folhas de Letraset, que continham passagens com Lorem Ipsum, e mais recentemente com os programas de publicação como o Aldus PageMaker que incluem versões do Lorem Ipsum.
         </div>
     </div>
