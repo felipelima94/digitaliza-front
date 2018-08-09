@@ -8,8 +8,12 @@ var app = angular.module("app", ["ngRoute"])
             .when('/cadastrar', {
                 templateUrl: 'views/cadastrar.html'
             })
-            .when('/home/:opt', {
+            .when('/home', {
                 templateUrl: "views/home.html"
+            })
+            .when('/home/:opt', {
+                templateUrl: "views/home.html",
+                controller: "CadastroController"
             })
             .otherwise({redirectTo : '/home'});
 
