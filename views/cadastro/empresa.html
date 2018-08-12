@@ -33,63 +33,63 @@
     }
 </style>
     
-<form>
+<form role="form" ng-submit="submitEmpresa()">
     <div class="row">
-    <label>
-        <p class="title-label">Razão social* </p>
-        <input class="input" type="text" placeholder="Razão social">
-    </label>
-    <label>
-        <p class="title-label">Nome Fantasia* </p>
-        <input class="input" type="text" placeholder="Nome Fantasia">
-    </label>
-    <label>
-        <p class="title-label">CNPJ* </p>
-        <input class="input" type="text" placeholder="CNPJ">
-    </label>
-    <label>
-        <p class="title-label">Email* </p>
-        <input class="input" type="text" placeholder="Email">
-    </label>
-    <label>
-        <p class="title-label">Inscrição Estadual </p>
-        <input class="input" type="text" placeholder="Inscrição Estadual">
-    </label>
-    <label>
-        <p class="title-label">Telefone 1* </p>
-        <input class="input" type="text" placeholder="Telefone 1">
-    </label>
-    <label>
-        <p class="title-label">Telefone 2 </p>
-        <input class="input" type="text" placeholder="Telefone 2">
-    </label>
-    <label>
-        <p class="title-label">CEP* </p>
-        <input class="input" type="text" placeholder="CEP">
-    </label>
-    <label>
-    <label>
-        <p class="title-label">Rua, Av.* </p>
-        <input class="input" type="text" placeholder="Rua, Av.">
-    </label>
-    <label>
-        <p class="title-label">Número* </p>
-        <input class="input" type="text" placeholder="Número">
-    </label>
-    <label>
-        <p class="title-label">Complemento* </p>
-        <input class="input" type="text" placeholder="Complemento">
-    </label>
-    <label>
-        <p class="title-label">Cidade* </p>
-        <input class="input" type="text" placeholder="Cidade">
-    </label>
-    <label>
-        <p class="title-label">Estado* </p>
-        <select class="input" name="estado">
-            <option value="">Selecione o estado</option>
-        </select>
-    </label>
+        <label>
+            <p class="title-label">Razão social* </p>
+            <input class="input" ng-model="formEmpresa.razaoSocial" type="text" placeholder="Razão social" required>
+        </label>
+        <label>
+            <p class="title-label">Nome Fantasia* </p>
+            <input class="input" ng-model="formEmpresa.nomeFantasia" type="text" placeholder="Nome Fantasia" required>
+        </label>
+        <label>
+            <p class="title-label">CNPJ* </p>
+            <input class="input" ng-model="formEmpresa.cnpj" type="text" placeholder="CNPJ" required>
+        </label>
+        <label>
+            <p class="title-label">Email* </p>
+            <input class="input" ng-model="formEmpresa.email" type="text" placeholder="Email" required>
+        </label>
+        <label>
+            <p class="title-label">Inscrição Estadual </p>
+            <input class="input" ng-model="formEmpresa.inscricaoSocial" type="text" placeholder="Inscrição Estadual">
+        </label>
+        <label>
+            <p class="title-label">Telefone 1* </p>
+            <input class="input" ng-model="formEmpresa.telefone1" type="text" placeholder="Telefone 1" required>
+        </label>
+        <label>
+            <p class="title-label">Telefone 2 </p>
+            <input class="input" ng-model="formEmpresa.telefone2" type="text" placeholder="Telefone 2">
+        </label>
+        <label>
+            <p class="title-label">CEP* </p>
+            <input class="input" ng-model="formEmpresa.cep" type="text" placeholder="CEP" required>
+        </label>
+        <label>
+            <p class="title-label">Rua, Av.* </p>
+            <input class="input" ng-model="formEmpresa.endereco" type="text" placeholder="Rua, Av." required>
+        </label>
+        <label>
+            <p class="title-label">Número* </p>
+            <input class="input" ng-model="formEmpresa.numero" type="text" placeholder="Número" required>
+        </label>
+        <label>
+            <p class="title-label">Complemento </p>
+            <input class="input" ng-model="formEmpresa.complemento" type="text" placeholder="Complemento">
+        </label>
+        <label>
+            <p class="title-label">Cidade* </p>
+            <input class="input" ng-model="formEmpresa.cidade" type="text" placeholder="Cidade" required>
+        </label>
+        <label>
+            <p class="title-label">Estado* </p>
+            <select class="input" ng-model="formEmpresa.estado" required>
+                <option value="" selected>Selecione o estado</option>
+                <option ng-repeat="estado in estados" value="{{estado.name}}">{{estado.name}}</option>
+            </select>
+        </label>
     </div>
     <button class="btn btn-blue" type="submit">Seguinte</button>
 </form>

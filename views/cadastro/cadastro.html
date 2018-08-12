@@ -33,24 +33,24 @@
     }
 </style>
 
-<form>
+<form role="form" ng-submit="registerUser()">
     <label class="input-label"><p class="title-label">Nome* </p>
-        <input class="input" type="text" placeholder="Nome">
+        <input class="input" ng-model="formUser.nome" type="text" placeholder="Nome">
     </label>
     <label class="input-label"><p class="title-label">Sobrenome* </p>
-        <input class="input" type="text" placeholder="Sobrenome">
+        <input class="input" ng-model="formUser.sobrenome" type="text" placeholder="Sobrenome">
     </label>
     <label class="input-label"><p class="title-label">Usuário* </p>
-        <input class="input" type="text" placeholder="Nome de usuário">
+        <input class="input" ng-model="formUser.usuario" type="text" placeholder="Nome de usuário">
     </label>
-    <label class="input-label"><p class="title-label">Telefone </p>
-        <input class="input" type="text" placeholder="Telefone">
-    </label>
+    <!-- <label class="input-label"><p class="title-label">Telefone </p>
+        <input class="input" ng-model="" type="text" placeholder="Telefone">
+    </label> -->
     <label class="input-label"><p class="title-label">Senha* </p>
-        <input class="input" type="password" placeholder="Senha">
+        <input class="input" ng-model="formUser.senha" type="password" placeholder="Senha">
     </label>
     <label class="input-label"><p class="title-label">Repita a senha* </p>
-        <input class="input" type="password" placeholder="Repita a senha">
+        <input class="input" ng-model="formUser.verifySenha" type="password" placeholder="Repita a senha">
     </label>
     <button class="btn btn-blue" type="submit">Finalizar</button>
 </form>
