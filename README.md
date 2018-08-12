@@ -3,7 +3,8 @@
 ##Dependencias
 ###Instalar
     > Node.js
-    > Rodar no terminal: "npm install" para instalar as dependencias
+    > Na pasta raiz do projeto rodar o comando
+        > npm install
         
 ###Start server
     > npm start

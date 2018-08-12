@@ -27,22 +27,38 @@ app.controller("starting", ($scope, $routeParams, $http) => {
         // Nome Fantasia 
         // CNPJ
         // Inscrição Estadual
-        sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
-        window.location.href="/cadastro/representante";
+        $http.get("/empresas").then((response) => {
+            if(response.razaoSocial == $scope.formEmpresa.razaoSocial) {
+                log("Razão social já está cadastrada");
+            } else if( response.nomeFantasia == $scope.formEmpresa.nomeFantasia){
+                log("Nome fantasia já está em uso");
+            } else if(response.cnpj == $scope.formEmpresa.cnpj) {
+                log("CNPJ já está em uso");
+            } else if(response.inscricaoEstadual == $scope.formEmpresa.inscricaoEstadual && $scope.formEmpresa.inscricaoEstadual != null){
+                log("Inscrição estadual já está em uso");
+            } else {
+                sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
+                window.location.href="/cadastro/representante";
+            }
+        })
     }
 
     $scope.formUser = {}
     $scope.registerUser = () => {
         if($scope.formUser.senha != $scope.formUser.verifySenha) {
             console.log("senha incorreta");
-            //verificar usuario;
         } else {
-            let empresa = sessionStorage.getItem("empresa");
-            $http.post("empresa", empresa).then((response) => {
-                $http.post("usuario", $scope.formUser).then(() => {
-                    console.log("sucesso");
-                })
-            })
+            //verificar usuario;
+            $http.get("usuario/"+$scope.formUser.usuario).then((response) => {
+                if(response == false) {
+                    let empresa = sessionStorage.getItem("empresa");
+                    $http.post("empresa", empresa).then((response) => {
+                        $http.post("usuario", $scope.formUser).then(() => {
+                            console.log("sucesso");
+                        })
+                    })
+                }
+            }) // end of get request
         }
     }
 
