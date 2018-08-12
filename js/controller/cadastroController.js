@@ -1,6 +1,13 @@
-angular.module("app")
-.controller("CadastroController", ($scope,$routeParams) => {
-    if($routeParams == "cadastro") {
-        $scope.template.url = "../../views/model/cadastro.html";
+app.controller("CadastroController", ($scope, $routeParams) => {
+    console.log($routeParams);
+    if($routeParams.opt == "cadastro") {
+        $scope.template = {
+            url: "../../views/modules/cadastro.html"
+        };
+    }
+    else {
+        $scope.template = {
+            url: null
+        };
     }
 });

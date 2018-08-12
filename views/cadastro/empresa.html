@@ -1,0 +1,95 @@
+<style>
+    .input {
+        margin: 5px;
+        width: 50%;
+        height: 35px;
+        border-style: none;
+        border-radius: 5px;
+        padding: 0 15px 0 15px;
+        font-size: 1.3em;
+        color: #707070;
+        display: inline-block;
+        box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+    }
+    .input:focus {
+        color: #222222;
+        box-shadow: #B8D0FF 0 0 5px;
+    }
+    .content .body-content {
+        padding: 0 0 0 25px;
+        text-align: left;
+    }
+    .row label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .title-label {
+        font-size: 1.3em;
+        font-weight: bold; 
+    }
+    .btn {
+        float: right;
+    }
+</style>
+    
+<form>
+    <div class="row">
+    <label>
+        <p class="title-label">Razão social* </p>
+        <input class="input" type="text" placeholder="Razão social">
+    </label>
+    <label>
+        <p class="title-label">Nome Fantasia* </p>
+        <input class="input" type="text" placeholder="Nome Fantasia">
+    </label>
+    <label>
+        <p class="title-label">CNPJ* </p>
+        <input class="input" type="text" placeholder="CNPJ">
+    </label>
+    <label>
+        <p class="title-label">Email* </p>
+        <input class="input" type="text" placeholder="Email">
+    </label>
+    <label>
+        <p class="title-label">Inscrição Estadual </p>
+        <input class="input" type="text" placeholder="Inscrição Estadual">
+    </label>
+    <label>
+        <p class="title-label">Telefone 1* </p>
+        <input class="input" type="text" placeholder="Telefone 1">
+    </label>
+    <label>
+        <p class="title-label">Telefone 2 </p>
+        <input class="input" type="text" placeholder="Telefone 2">
+    </label>
+    <label>
+        <p class="title-label">CEP* </p>
+        <input class="input" type="text" placeholder="CEP">
+    </label>
+    <label>
+    <label>
+        <p class="title-label">Rua, Av.* </p>
+        <input class="input" type="text" placeholder="Rua, Av.">
+    </label>
+    <label>
+        <p class="title-label">Número* </p>
+        <input class="input" type="text" placeholder="Número">
+    </label>
+    <label>
+        <p class="title-label">Complemento* </p>
+        <input class="input" type="text" placeholder="Complemento">
+    </label>
+    <label>
+        <p class="title-label">Cidade* </p>
+        <input class="input" type="text" placeholder="Cidade">
+    </label>
+    <label>
+        <p class="title-label">Estado* </p>
+        <select class="input" name="estado">
+            <option value="">Selecione o estado</option>
+        </select>
+    </label>
+    </div>
+    <button class="btn btn-blue" type="submit">Seguinte</button>
+</form>

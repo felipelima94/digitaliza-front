@@ -53,20 +53,21 @@
 /* content config */
 .content {
     position: relative;
-    width: 650px;
+    width: 800px;
+    padding-bottom: 30px;
 }
-.content .title-about {
+.content .title-content {
     margin: 15px 0 10px 35px;
     font-size: 2.8em;
     font-weight: bold;
 }
-
-.content .home-about {
+/* 
+.content .body-content {
     padding: 5px 0 5px 15px;
     border-left: 5px solid #6699FF;
     text-align: justify;
     text-indent: 2em;
-}
+} */
 
 /* icons config */
 .iconSingIn {

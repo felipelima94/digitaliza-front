@@ -1,0 +1,56 @@
+<style>
+    .input {
+        width: 50%;
+        height: 35px;
+        border-style: none;
+        border-radius: 5px;
+        padding: 0 15px 0 15px;
+        font-size: 1.3em;
+        color: #707070;
+        display: inline-block;
+        box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+    }
+    .input:focus {
+        color: #222222;
+        box-shadow: #B8D0FF 0 0 5px;
+    }
+    .content .body-content {
+        padding: 0 0 0 25px;
+        text-align: left;
+    }
+    .input-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .title-label {
+        font-size: 1.5em;
+        font-weight: bold; 
+
+    }
+    .btn {
+        float: right;
+    }
+</style>
+
+<form>
+    <label class="input-label"><p class="title-label">Nome* </p>
+        <input class="input" type="text" placeholder="Nome">
+    </label>
+    <label class="input-label"><p class="title-label">Sobrenome* </p>
+        <input class="input" type="text" placeholder="Sobrenome">
+    </label>
+    <label class="input-label"><p class="title-label">Usuário* </p>
+        <input class="input" type="text" placeholder="Nome de usuário">
+    </label>
+    <label class="input-label"><p class="title-label">Telefone </p>
+        <input class="input" type="text" placeholder="Telefone">
+    </label>
+    <label class="input-label"><p class="title-label">Senha* </p>
+        <input class="input" type="password" placeholder="Senha">
+    </label>
+    <label class="input-label"><p class="title-label">Repita a senha* </p>
+        <input class="input" type="password" placeholder="Repita a senha">
+    </label>
+    <button class="btn btn-blue" type="submit">Finalizar</button>
+</form>

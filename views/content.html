@@ -1,0 +1,29 @@
+<!-- import styles -->
+<link rel="stylesheet" href="/css/content-layout.css">
+
+<!-- import scripts -->
+
+<!-- html template -->
+<section id="home" ng-controller="starting">
+    <div class="head">
+        <div class="desc">
+            <!-- <div class="logo"></div> -->
+            <div style="
+                font-size: 4em;
+                font-weight: bold;
+                color: #FFF;
+            ">Digitaliza</div>
+            <p class="subtitle">Para o bem-estar da sua organização</p>
+        </div> <!-- div:desc -->
+        <div class="accessLinks">
+            <a href="/cadastro/representante" class="accessLink"><div><div class="iconSingIn"></div>Cadastrar</div></a>
+            <a href="" class="accessLink"><div><div class="iconSingUp"></div>Entrar</div></a>
+        </div>
+    </div> <!-- end of head div -->
+    <div class="content">
+        <header class="title-content">{{template.title}}</header>
+        <div class="body-content" ng-include="template.url">
+            
+        </div>
+    </div>
+</section>
