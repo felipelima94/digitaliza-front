@@ -3,7 +3,8 @@ var express = require('express'),
     app = express(),
     server = http.createServer(app);
 
-app.use('/js', express.static(__dirname + '/js'));
+    app.use('/node_modules', express.static(__dirname + '/node_modules'));
+    app.use('/js', express.static(__dirname + '/js'));
 //app.use('/dist', express.static(__dirname + '/../dist'));
 app.use('/css', express.static(__dirname + '/css'));
 // app.use('/partials', express.static(__dirname + '/partials'));
