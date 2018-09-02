@@ -1,95 +1,129 @@
 <style>
-    .input {
-        margin: 5px;
-        width: 50%;
-        height: 35px;
-        border-style: none;
-        border-radius: 5px;
-        padding: 0 15px 0 15px;
-        font-size: 1.3em;
-        color: #707070;
-        display: inline-block;
-        box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
-    }
-    .input:focus {
-        color: #222222;
-        box-shadow: #B8D0FF 0 0 5px;
-    }
-    .content .body-content {
-        padding: 0 0 0 25px;
-        text-align: left;
-    }
-    .row label {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .title-label {
-        font-size: 1.3em;
-        font-weight: bold; 
-    }
-    .btn {
-        float: right;
+    .hint {
+        /* Position the hint */
+        position: absolute;
+        left: 2px;
+        right: auto;
+        bottom: 7px;
+        /* Copy styles from ng-messages */
+        font-size: 12px;
+        line-height: 14px;
+        transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+        /* Set our own color */
+        color: grey; 
     }
 </style>
     
-<form role="form" ng-submit="submitEmpresa()">
-    <div class="row">
-        <label>
-            <p class="title-label">Razão social* </p>
-            <input class="input" ng-model="formEmpresa.razaoSocial" type="text" placeholder="Razão social" required>
-        </label>
-        <label>
-            <p class="title-label">Nome Fantasia* </p>
-            <input class="input" ng-model="formEmpresa.nomeFantasia" type="text" placeholder="Nome Fantasia" required>
-        </label>
-        <label>
-            <p class="title-label">CNPJ* </p>
-            <input class="input" ng-model="formEmpresa.cnpj" type="text" placeholder="CNPJ" required>
-        </label>
-        <label>
-            <p class="title-label">Email* </p>
-            <input class="input" ng-model="formEmpresa.email" type="text" placeholder="Email" required>
-        </label>
-        <label>
-            <p class="title-label">Inscrição Estadual </p>
-            <input class="input" ng-model="formEmpresa.inscricaoSocial" type="text" placeholder="Inscrição Estadual">
-        </label>
-        <label>
-            <p class="title-label">Telefone 1* </p>
-            <input class="input" ng-model="formEmpresa.telefone1" type="text" placeholder="Telefone 1" required>
-        </label>
-        <label>
-            <p class="title-label">Telefone 2 </p>
-            <input class="input" ng-model="formEmpresa.telefone2" type="text" placeholder="Telefone 2">
-        </label>
-        <label>
-            <p class="title-label">CEP* </p>
-            <input class="input" ng-model="formEmpresa.cep" type="text" placeholder="CEP" required>
-        </label>
-        <label>
-            <p class="title-label">Rua, Av.* </p>
-            <input class="input" ng-model="formEmpresa.endereco" type="text" placeholder="Rua, Av." required>
-        </label>
-        <label>
-            <p class="title-label">Número* </p>
-            <input class="input" ng-model="formEmpresa.numero" type="text" placeholder="Número" required>
-        </label>
-        <label>
-            <p class="title-label">Complemento </p>
-            <input class="input" ng-model="formEmpresa.complemento" type="text" placeholder="Complemento">
-        </label>
-        <label>
-            <p class="title-label">Cidade* </p>
-            <input class="input" ng-model="formEmpresa.cidade" type="text" placeholder="Cidade" required>
-        </label>
-        <label>
-            <p class="title-label">Estado* </p>
-            <select class="input" ng-model="formEmpresa.estado" required>
-                <option value="" selected>Selecione o estado</option>
-                <option ng-repeat="estado in estados" value="{{estado.name}}">{{estado.name}}</option>
-            </select>
-        </label>
+<form role="form" name="projectForm" ng-submit="submitEmpresa()">
+    <div>
+        <md-input-container class="md-block">
+            <label>Razão social</label>
+            <input required name="razao_social" ng-model="formEmpresa.razao_social">
+            <div ng-messages="projectForm.razao_social.$error">
+                <div ng-message="required">Isto é obrigatório.</div>
+            </div>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+            <label>Nome Fantasia</label>
+            <input required name="nome_fantasia" ng-model="formEmpresa.nome_fantasia">
+            <div ng-messages="projectForm.nome_fantasia.$error">
+                <div ng-message="required">Isto é obrigatório.</div>
+            </div>
+        </md-input-container>
+
+        <div layout="row">
+            <md-input-container flex="50">
+                <label>CNPJ</label>
+                <input required name="cnpj"
+                    ng-model="formEmpresa.cnpj" 
+                    ng-pattern="/^[0-9]{2}.[0-9]{3}.[0-9]{3}/[0-9]{4}-[0-9]{2}$/">
+                <div class="hint">##.###.###/####-##</div>
+                <div ng-messages="projectForm.cnpj.$error">
+                    <div ng-message="pattern">Entre com um CNPJ válido (##.###.###/####-##)</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container flex="50">
+                <label>Inscrição Estadual</label>
+                <input name="inscricao_estadual" ng-model="formEmpresa.inscricao_estadual">
+            </md-input-container>
+        </div>
+
+        <md-input-container class="md-block">
+            <label>E-mail</label>
+            <input required name="email" ng-model="formEmpresa.email" minlength="6" maxlength="100"  ng-pattern="/^.+@.+\..+$/">
+            <div class="hint">email@exemple.com</div>
+            <div ng-messages="projectForm.email.$error">
+                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                    Seu email deve conter de 6 a 100 caracteres e ser um endereço válido
+                </div>
+            </div>
+        </md-input-container>
+
+        <div layout="row">
+            <md-input-container flex="50">
+                <label>Telefone 1</label>
+                <input required name="telefone1" ng-model="formEmpresa.telefone1">
+                <div ng-messages="projectForm.telefone1.$error">
+                    <div ng-message="required">Isto é obrigatório.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container flex="50">
+                <label>Telefone 2</label>
+                <input name="telefone2" ng-model="formEmpresa.telefone2">
+            </md-input-container>
+        </div>
+
+        <div layout="row">
+            <md-input-container flex="30">
+                <label>CEP</label>
+                <input required name="cep" ng-model="formEmpresa.cep">
+                <div ng-messages="projectForm.cep.$error">
+                    <div ng-message="required">Isto é obrigatório.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container flex="60">
+                <label>Rua, Av.</label>
+                <input required name="endereco" ng-model="formEmpresa.endereco">
+                <div ng-messages="projectForm.endereco.$error">
+                    <div ng-message="required">Isto é obrigatório.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container flex="15">
+                <label>Número</label>
+                <input required name="numero" ng-model="formEmpresa.numero">
+                <div ng-messages="projectForm.numero.$error">
+                    <div ng-message="required">Isto é obrigatório.</div>
+                </div>
+            </md-input-container>
+        </div>
+
+        <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Cidade</label>
+                <input required name="cidade" ng-model="formEmpresa.cidade">
+                <div ng-messages="projectForm.cidade.$error">
+                    <div ng-message="required">Isto é obrigatório.</div>
+                </div>
+            </md-input-container>
+            
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Estado</label>
+                <md-select required name="estado" ng-model="formEmpresa.estado">
+                    <md-option ng-repeat="estado in estados" value="{{estado.name}}">
+                        {{estado.name}}
+                    </md-option>
+                </md-select>
+                <div ng-messages="projectForm.estado.$error">
+                        <div ng-message="required">Isto é obrigatório.</div>
+                    </div>
+            </md-input-container>
+        </div>
+
     </div>
     <button class="btn btn-blue" type="submit">Seguinte</button>
 </form>

@@ -1,4 +1,5 @@
-app.controller("starting", ($scope, $routeParams, $http, $mdDialog) => {
+angular.module('app')
+.controller("starting", ($scope, $routeParams, $http, $mdDialog) => {
     if($routeParams.opt == "representante") {
         $scope.template = {
             title: "Cadastro de Representante",
@@ -27,20 +28,34 @@ app.controller("starting", ($scope, $routeParams, $http, $mdDialog) => {
         // Nome Fantasia 
         // CNPJ
         // Inscrição Estadual
-        $http.get("/empresas").then((response) => {
-            if(response.razaoSocial == $scope.formEmpresa.razaoSocial) {
-                log("Razão social já está cadastrada");
-            } else if( response.nomeFantasia == $scope.formEmpresa.nomeFantasia){
-                log("Nome fantasia já está em uso");
-            } else if(response.cnpj == $scope.formEmpresa.cnpj) {
-                log("CNPJ já está em uso");
-            } else if(response.inscricaoEstadual == $scope.formEmpresa.inscricaoEstadual && $scope.formEmpresa.inscricaoEstadual != null){
-                log("Inscrição estadual já está em uso");
-            } else {
-                sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
-                window.location.href="/cadastro/representante";
+        $.post("http://localhost:8000/api/verify/empresa", $scope.formEmpresa).then( response => {
+            console.log("empresa", response);
+            if(response.length > 0) {
+                alert(response)
             }
-        })
+        }).catch(function (err) { console.log(err)});
+        
+        // .success( response => {
+        //     sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
+        //     window.location.href="/cadastro/representante";
+        // }).error(error => {
+        //     alert("esta empresa já existe");
+        // })
+
+        // $http.get("/empresas").then((response) => {
+        //     if(response.razaoSocial == $scope.formEmpresa.razaoSocial) {
+        //         console.log("Razão social já está cadastrada");
+        //     } else if( response.nomeFantasia == $scope.formEmpresa.nomeFantasia){
+        //         console.log("Nome fantasia já está em uso");
+        //     } else if(response.cnpj == $scope.formEmpresa.cnpj) {
+        //         console.log("CNPJ já está em uso");
+        //     } else if(response.inscricaoEstadual == $scope.formEmpresa.inscricaoEstadual && $scope.formEmpresa.inscricaoEstadual != null){
+        //         console.log("Inscrição estadual já está em uso");
+        //     } else {
+                // sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
+                // window.location.href="/cadastro/representante";
+        //     }
+        // })
     }
 
     $scope.formUser = {}
