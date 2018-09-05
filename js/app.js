@@ -1,4 +1,4 @@
-var app = angular.module("app", ["ngRoute", "ngMaterial", 'ngMessages'])
+var app = angular.module("app", ["ngRoute", "ngMaterial", 'ngMessages', 'ui.utils.masks', 'idf.br-filters'])
     .config(($routeProvider, $locationProvider) => {
         $locationProvider.html5Mode(true);
 

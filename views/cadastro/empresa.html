@@ -18,41 +18,41 @@
     <div>
         <md-input-container class="md-block">
             <label>Razão social</label>
-            <input required name="razao_social" ng-model="formEmpresa.razao_social">
+            <input type="text" required name="razao_social" ng-model="formEmpresa.razao_social">
             <div ng-messages="projectForm.razao_social.$error">
-                <div ng-message="required">Isto é obrigatório.</div>
+                <div ng-message="required">Este campo é obrigatório.</div>
             </div>
         </md-input-container>
         
         <md-input-container class="md-block">
             <label>Nome Fantasia</label>
-            <input required name="nome_fantasia" ng-model="formEmpresa.nome_fantasia">
+            <input type="text" required name="nome_fantasia" ng-model="formEmpresa.nome_fantasia">
             <div ng-messages="projectForm.nome_fantasia.$error">
-                <div ng-message="required">Isto é obrigatório.</div>
+                <div ng-message="required">Este campo é obrigatório.</div>
             </div>
         </md-input-container>
 
         <div layout="row">
             <md-input-container flex="50">
                 <label>CNPJ</label>
-                <input required name="cnpj"
+                <input type="text" required name="cnpj"
                     ng-model="formEmpresa.cnpj" 
-                    ng-pattern="/^[0-9]{2}.[0-9]{3}.[0-9]{3}/[0-9]{4}-[0-9]{2}$/">
+                    ng-pattern="/^[0-9]{2}.[0-9]{3}.[0-9]{3}/[0-9]{4}-[0-9]{2}$/" ui-br-cnpj-mask>
                 <div class="hint">##.###.###/####-##</div>
                 <div ng-messages="projectForm.cnpj.$error">
-                    <div ng-message="pattern">Entre com um CNPJ válido (##.###.###/####-##)</div>
+                    <div ng-message="required">Entre com um CNPJ válido (##.###.###/####-##)</div>
                 </div>
             </md-input-container>
 
             <md-input-container flex="50">
                 <label>Inscrição Estadual</label>
-                <input name="inscricao_estadual" ng-model="formEmpresa.inscricao_estadual">
+                <input type="text" name="inscricao_estadual" ng-model="formEmpresa.inscricao_estadual">
             </md-input-container>
         </div>
 
         <md-input-container class="md-block">
             <label>E-mail</label>
-            <input required name="email" ng-model="formEmpresa.email" minlength="6" maxlength="100"  ng-pattern="/^.+@.+\..+$/">
+            <input type="text" required name="email" ng-model="formEmpresa.email" minlength="6" maxlength="100"  ng-pattern="/^.+@.+\..+$/">
             <div class="hint">email@exemple.com</div>
             <div ng-messages="projectForm.email.$error">
                 <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
@@ -64,40 +64,42 @@
         <div layout="row">
             <md-input-container flex="50">
                 <label>Telefone 1</label>
-                <input required name="telefone1" ng-model="formEmpresa.telefone1">
+                <input type="text" required name="telefone1" ng-model="formEmpresa.telefone1" ui-br-phone-number-mask="areaCode">
+                <div class="hint">(##) ####-#### ou (##) #####-####</div>
                 <div ng-messages="projectForm.telefone1.$error">
-                    <div ng-message="required">Isto é obrigatório.</div>
+                    <div ng-message="required">Este campo é obrigatório.</div>
                 </div>
             </md-input-container>
 
             <md-input-container flex="50">
                 <label>Telefone 2</label>
-                <input name="telefone2" ng-model="formEmpresa.telefone2">
+                <div class="hint">(##) ####-#### ou (##) #####-####</div>
+                <input type="text" name="telefone2" ng-model="formEmpresa.telefone2" ui-br-phone-number-mask="areaCode">
             </md-input-container>
         </div>
 
         <div layout="row">
             <md-input-container flex="30">
                 <label>CEP</label>
-                <input required name="cep" ng-model="formEmpresa.cep">
+                <input type="text" required name="cep" ng-model="formEmpresa.cep" ui-br-cep-mask>
                 <div ng-messages="projectForm.cep.$error">
-                    <div ng-message="required">Isto é obrigatório.</div>
+                    <div ng-message="required">Este campo é obrigatório.</div>
                 </div>
             </md-input-container>
 
             <md-input-container flex="60">
                 <label>Rua, Av.</label>
-                <input required name="endereco" ng-model="formEmpresa.endereco">
+                <input type="text" required name="endereco" ng-model="formEmpresa.endereco">
                 <div ng-messages="projectForm.endereco.$error">
-                    <div ng-message="required">Isto é obrigatório.</div>
+                    <div ng-message="required">Este campo é obrigatório.</div>
                 </div>
             </md-input-container>
 
             <md-input-container flex="15">
                 <label>Número</label>
-                <input required name="numero" ng-model="formEmpresa.numero">
+                <input type="text" required name="numero" ng-model="formEmpresa.numero">
                 <div ng-messages="projectForm.numero.$error">
-                    <div ng-message="required">Isto é obrigatório.</div>
+                    <div ng-message="required">Este campo é obrigatório.</div>
                 </div>
             </md-input-container>
         </div>
@@ -105,9 +107,9 @@
         <div layout-gt-sm="row">
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Cidade</label>
-                <input required name="cidade" ng-model="formEmpresa.cidade">
+                <input type="text" required name="cidade" ng-model="formEmpresa.cidade">
                 <div ng-messages="projectForm.cidade.$error">
-                    <div ng-message="required">Isto é obrigatório.</div>
+                    <div ng-message="required">Este campo é obrigatório.</div>
                 </div>
             </md-input-container>
             
@@ -119,7 +121,7 @@
                     </md-option>
                 </md-select>
                 <div ng-messages="projectForm.estado.$error">
-                        <div ng-message="required">Isto é obrigatório.</div>
+                        <div ng-message="required">Este campo é obrigatório.</div>
                     </div>
             </md-input-container>
         </div>
