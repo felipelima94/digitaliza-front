@@ -10,15 +10,28 @@
     align-items: center;
     cursor: pointer;
 }
-.btn:focus {
-    background: rgb(84, 127, 214);
-}
 
 /* estilos */
+.btn-blue:disabled {
+    background-color: rgb(136, 163, 214);
+    color: #DDD;
+}
 .btn-blue {
     background-color: #6699FF;
     color: #FFF;
     box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+}
+.btn-blue:focus {
+    background: rgb(84, 127, 214);
+}
+.btn-red {
+    background-color: rgb(255, 70, 50) ;
+    color: #FFF;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+}
+
+.btn-red:focus { 
+    background-color: rgb(255, 60, 30);
 }
 .pointer {
     cursor: pointer;

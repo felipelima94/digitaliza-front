@@ -33,24 +33,53 @@
     }
 </style>
 
-<form role="form" ng-submit="registerUser()">
-    <label class="input-label"><p class="title-label">Nome* </p>
-        <input class="input" ng-model="formUser.nome" type="text" placeholder="Nome">
-    </label>
-    <label class="input-label"><p class="title-label">Sobrenome* </p>
-        <input class="input" ng-model="formUser.sobrenome" type="text" placeholder="Sobrenome">
-    </label>
-    <label class="input-label"><p class="title-label">Usuário* </p>
-        <input class="input" ng-model="formUser.usuario" type="text" placeholder="Nome de usuário">
-    </label>
-    <!-- <label class="input-label"><p class="title-label">Telefone </p>
-        <input class="input" ng-model="" type="text" placeholder="Telefone">
-    </label> -->
-    <label class="input-label"><p class="title-label">Senha* </p>
-        <input class="input" ng-model="formUser.senha" type="password" placeholder="Senha">
-    </label>
-    <label class="input-label"><p class="title-label">Repita a senha* </p>
-        <input class="input" ng-model="formUser.verifySenha" type="password" placeholder="Repita a senha">
-    </label>
-    <button class="btn btn-blue" type="submit">Finalizar</button>
+<form role="form" name="userForm" ng-submit="registerUser()">
+    <div layout="row">
+        <md-input-container flex="50">
+            <label>Nome</label>
+            <input type="text" required name="first_name" ng-model="formUser.first_name">
+            <div ng-messages="userForm.first_name.$error">
+                <div ng-message="required">Este campo é obrigatório.</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container flex="50">
+            <label>Sobrenome</label>
+            <input type="text" required name="last_name" ng-model="formUser.last_name">
+            <div ng-messages="userForm.last_name.$error">
+                <div ng-message="required">Este campo é obrigatório.</div>
+            </div>
+        </md-input-container>
+    </div>
+    <div layout="row">
+        <md-input-container  flex="100">
+            <label>Nome de usuário</label>
+            <input type="text" required name="user_name" ng-model="formUser.user_name">
+            <div ng-messages="userForm.user_name.$error">
+                <div ng-message="required">Este campo é obrigatório.</div>
+            </div>
+        </md-input-container>
+    </div>
+    <div layout="row">
+            <md-input-container flex="50">
+                <label>Senha</label>
+                <input type="password" minlength="8" required name="password" ng-model="formUser.password">
+                <div ng-messages="userForm.password.$error">
+                        <div ng-message="minlength">Deve ter no minimo 8 caracteres</div>
+                    <div ng-message="required">Este campo é obrigatório.</div>
+                </div>
+            </md-input-container>
+    
+            <md-input-container flex="50">
+                <label>Repita a Senha</label>
+                <input type="password" required name="c_password" ng-model="formUser.c_password" iqual="{{formUser.password}}">
+                <div ng-if="formUser.c_password != formUser.password && formUser.c_password">
+                        <div class="md-input-message-animation ng-scope">está senha deve ser igual a anterior</div>
+                    </div>
+                <div ng-messages="userForm.c_password.$error">
+                    <div ng-message="required">Este campo é obrigatório.</div>
+                </div>
+            </md-input-container>
+        </div>
+    <button class="btn btn-blue" ng-disabled="userForm.$invalid" type="submit">Finalizar</button>
 </form>

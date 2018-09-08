@@ -11,7 +11,12 @@ app.use('/css', express.static(__dirname + '/css'));
 app.use('/views', express.static(__dirname + '/views'));
 app.use('/img', express.static(__dirname + '/img'));
 app.use('/imagens', express.static(__dirname + '/imagens'));
-
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With, Application');
+    next();
+});
 app.all('/*', function(req, res, next) {
     // Just send the index.html for other files to support HTML5Mode
     res.sendFile('index.html', { root: __dirname });

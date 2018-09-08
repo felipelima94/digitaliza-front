@@ -18,9 +18,11 @@
     <div>
         <md-input-container class="md-block">
             <label>Razão social</label>
-            <input type="text" required name="razao_social" ng-model="formEmpresa.razao_social">
-            <div ng-if="errorRegister.razao_social">
-                <div>Razão social já está em uso</div>
+            <input type="text" required name="razao_social" ng-model="formEmpresa.razao_social" no-repeat="{{razao_social}}">
+            <!-- <div ng-if="formEmpresa.razao_social == razao_social"> -->
+            <!-- <div ng-if="formEmpresa.razao_social == razao_social"> -->
+            <div ng-show="razao_social == formEmpresa.razao_social && razao_social">
+                <div class="md-input-message-animation ng-scope">Razão social já está em uso</div>
             </div>
             <div ng-messages="projectForm.razao_social.$error">
                 <div ng-message="required">Este campo é obrigatório.</div>
@@ -29,10 +31,12 @@
         
         <md-input-container class="md-block">
             <label>Nome Fantasia</label>
-            <input type="text" required name="nome_fantasia" ng-model="formEmpresa.nome_fantasia">
-            <div ng-if="errorRegister.nome_fantasia">
-                <div>Este nome já está em uso</div>
+            <input type="text" required name="nome_fantasia" ng-model="formEmpresa.nome_fantasia" no-repeat="{{nome_fantasia}}">
+            
+            <div ng-show="nome_fantasia == formEmpresa.nome_fantasia && nome_fantasia">
+                <div class="md-input-message-animation ng-scope">Este nome já está em uso</div>
             </div>
+
             <div ng-messages="projectForm.nome_fantasia.$error">
                 <div ng-message="required">Este campo é obrigatório.</div>
             </div>
@@ -44,16 +48,26 @@
                 <input type="text" required name="cnpj"
                     ng-model="formEmpresa.cnpj" 
                     ng-pattern="/^[0-9]{2}.[0-9]{3}.[0-9]{3}/[0-9]{4}-[0-9]{2}$/" ui-br-cnpj-mask>
+                
+                <div ng-show="cnpj == formEmpresa.cnpj && cnpj">
+                    <div class="md-input-message-animation ng-scope">Este cnpj já está em uso</div>
+                </div>
 
-                <div class="hint">##.###.###/####-##</div>
-                <div ng-messages="projectForm.cnpj.$error">
-                    <div ng-message="required">Entre com um CNPJ válido (##.###.###/####-##)</div>
+                <div ng-messages="projectForm.cnpj.$error" role="alert">
+                    <div ng-message-exp="['required', 'pattern']">
+                        Entre com um CNPJ válido (##.###.###/####-##)
+                    </div>
                 </div>
             </md-input-container>
 
             <md-input-container flex="50">
                 <label>Inscrição Estadual</label>
                 <input type="text" name="inscricao_estadual" ng-model="formEmpresa.inscricao_estadual">
+
+                <div ng-show="inscricao_estadual == formEmpresa.inscricao_estadual && inscricao_estadual">
+                    <div class="md-input-message-animation ng-scope">Inscrição Estadual já está em uso</div>
+                </div>
+
                 <div ng-if="errorRegister.inscricao_estadual">
                     <div>Esta inscrição já está em uso</div>
                 </div>
@@ -75,7 +89,7 @@
             <md-input-container flex="50">
                 <label>Telefone 1</label>
                 <input type="text" required name="telefone1" ng-model="formEmpresa.telefone1" ui-br-phone-number-mask="areaCode">
-                <div class="hint">(##) ####-#### ou (##) #####-####</div>
+                <!-- <div class="hint" ng-invalid="formEmpresa.telefone1">(##) ####-#### ou (##) #####-####</div> -->
                 <div ng-messages="projectForm.telefone1.$error">
                     <div ng-message="required">Este campo é obrigatório.</div>
                 </div>
@@ -83,7 +97,7 @@
 
             <md-input-container flex="50">
                 <label>Telefone 2</label>
-                <div class="hint">(##) ####-#### ou (##) #####-####</div>
+                <!-- <div class="hint">(##) ####-#### ou (##) #####-####</div> -->
                 <input type="text" name="telefone2" ng-model="formEmpresa.telefone2" ui-br-phone-number-mask="areaCode">
             </md-input-container>
         </div>
@@ -125,8 +139,8 @@
             
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Estado</label>
-                <md-select required name="estado" ng-model="formEmpresa.estado">
-                    <md-option ng-repeat="estado in estados" value="{{estado.name}}">
+                <md-select required name="uf" ng-model="formEmpresa.uf">
+                    <md-option ng-repeat="estado in estados" value="{{estado.sigla}}">
                         {{estado.name}}
                     </md-option>
                 </md-select>
@@ -137,5 +151,5 @@
         </div>
 
     </div>
-    <button class="btn btn-blue" type="submit">Seguinte</button>
+    <button class="btn btn-blue" ng-disabled="projectForm.$invalid" type="submit">Seguinte</button>
 </form>

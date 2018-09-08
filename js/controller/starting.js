@@ -1,5 +1,10 @@
-angular.module('app')
+angular.module('app').config(function ($qProvider) {
+		$qProvider.errorOnUnhandledRejections(false);
+})
 .controller("starting", ($scope, $routeParams, $http, $mdDialog) => {
+
+	$scope.apiUrl = 'http://localhost:8000/api'
+
 	if($routeParams.opt == "representante") {
 		$scope.template = {
 			title: "Cadastro de Representante",
@@ -22,106 +27,169 @@ angular.module('app')
 		window.location.href="/home";
 	}
 
-	$scope.formEmpresa = {};
+	$scope.formEmpresa = {
+		razao_social: "mesh transparent paradigms",
+		nome_fantasia: "Nienow-Ledner Inc",
+		cnpj: "73.183.337/0001-55",
+		email: "john.doe@gmail.com",
+		telefone1: "1111111111111",
+		cep: "11111111",
+		endereco: "11111111",
+		numero: "1111",
+		cidade: "araçatuba",
+		uf: "SP",
+		validade: "2018-12-12"
+	};
+	
 	$scope.submitEmpresa = () => {
 		// verificar Razão social
 		// Nome Fantasia 
 		// CNPJ
 		// Inscrição Estadual
-		$.post("http://localhost:8000/api/verify/empresa", $scope.formEmpresa).then( response => {
-			console.log("empresa", response);
+		$.post($scope.apiUrl+"/verify/empresa", $scope.formEmpresa).then( response => {
 			if(response.length > 0) {
-				alert(response)
+				response.forEach(element => {
+					$scope[element] = $scope.formEmpresa[element];
+					// $scope.formEmpresa[element].$valid = false;
+				});
+				document.querySelector("[name="+response[0]+"]").focus()
+			} else {
+				// $.post("http://localhost:8000/api/empresa", $scope.formEmpresa).then( response => {
+				// 	console.log("Cadastro de empresa", response);
+				// 	alert("cadastrado com sucesso");
+				// })
+				sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
+				window.location.href="/cadastro/representante";
 			}
-		}).catch(function (err) { console.log(err)});
+		}).catch(function (err) { console.error(err)});
 		
-		// .success( response => {
-		//     sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
-		//     window.location.href="/cadastro/representante";
-		// }).error(error => {
-		//     alert("esta empresa já existe");
-		// })
-
-		// $http.get("/empresas").then((response) => {
-		//     if(response.razaoSocial == $scope.formEmpresa.razaoSocial) {
-		//         console.log("Razão social já está cadastrada");
-		//     } else if( response.nomeFantasia == $scope.formEmpresa.nomeFantasia){
-		//         console.log("Nome fantasia já está em uso");
-		//     } else if(response.cnpj == $scope.formEmpresa.cnpj) {
-		//         console.log("CNPJ já está em uso");
-		//     } else if(response.inscricaoEstadual == $scope.formEmpresa.inscricaoEstadual && $scope.formEmpresa.inscricaoEstadual != null){
-		//         console.log("Inscrição estadual já está em uso");
-		//     } else {
-				// sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
-				// window.location.href="/cadastro/representante";
-		//     }
-		// })
 	}
 
 	$scope.formUser = {}
 	$scope.registerUser = () => {
-		if($scope.formUser.senha != $scope.formUser.verifySenha) {
-			console.log("senha incorreta");
-		} else {
-			//verificar usuario;
-			$http.get("usuario/"+$scope.formUser.usuario).then((response) => {
-				if(response == false) {
-					let empresa = sessionStorage.getItem("empresa");
-					$http.post("empresa", empresa).then((response) => {
-						$http.post("usuario", $scope.formUser).then(() => {
-							console.log("sucesso");
-						})
-					})
-				}
-			}) // end of get request
+		$scope.data = {
+			usuario: $scope.formUser,
+			empresa: JSON.parse(sessionStorage.getItem("empresa"))
 		}
+		$.post($scope.apiUrl+'/new/Empresa', $scope.data).then( response => {
+			console.log("data", response);
+			window.location.href="/files"
+		}, err => {
+			console.error(err);
+		})
 	}
 
-	$scope.showAlert = function(ev) {
-		// Appending dialog to document.body to cover sidenav in docs app
-		// Modal dialogs should fully cover application
-		// to prevent interaction outside of dialog
-		$mdDialog.show(
-			$mdDialog.alert()
-				.parent(angular.element(document.querySelector('#popupContainer')))
-				.clickOutsideToClose(true)
-				.title('Acessar conta!')
-				.textContent('You can specify some description text in here.')
-				.ariaLabel('Alert Dialog Demo')
-				.ok('Entrar')
-				.targetEvent(ev)
-		);
+
+	// login box
+	$scope.loginField;
+
+	$scope.showLoginBox = function(ev) {
+		$mdDialog.show({
+			controller: DialogController,
+			templateUrl: '/views/cadastro/login.html',
+			parent: angular.element(document.body),
+			targetEvent: ev,
+			clickOutsideToClose:true,
+			fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+		})
+		.then(function(answer) {
+			// function answer() in ng-click :: make btn
+			// $scope.status = 'You said the information was "' + answer + '".';
+		}, function() {
+			// função ao fechar
+			// $scope.status = 'You cancelled the dialog.';
+		});
 	};
+	function DialogController($scope, $mdDialog) {
+		$scope.hide = function() {
+			$mdDialog.hide();
+		};
+
+		$scope.cancel = function() {
+			$mdDialog.cancel();
+		};
+
+		$scope.answer = function(answer) {
+			if(answer == 'login') {
+				let loginUrl = 'http://localhost:8000/api/login';
+				$.ajax({
+					method: 'POST',
+					url: loginUrl,
+					data: $scope.loginField,
+					success: response => {
+						let token = "Bearer "+response.success.token;
+						sessionStorage.setItem("token", JSON.stringify(token));
+						window.location.href="/files"
+					},
+					error: err => {
+						alert("Usuario ou senha incorreto")
+					}
+				})
+			}
+			// $mdDialog.hide(answer);
+		};
+	}
 
 	console.log("$scope", $scope);
 
 	$scope.estados = [
-		{name: "Acre", sigla: ""},
-		{name: "Alagoas", sigla: ""},
-		{name: "Amapá", sigla: ""},
-		{name: "Amazonas", sigla: ""},
-		{name: "Bahia", sigla: ""},
-		{name: "Ceará", sigla: ""},
-		{name: "Distrito Federal", sigla: ""},
-		{name: "Espírito Santo", sigla: ""},
-		{name: "Goiás", sigla: ""},
-		{name: "Maranhão", sigla: ""},
-		{name: "Mato Grosso", sigla: ""},
-		{name: "Mato Grosso do Sul", sigla: ""},
-		{name: "Minas Gerais", sigla: ""},
-		{name: "Pará", sigla: ""},
-		{name: "Paraíba", sigla: ""},
-		{name: "Paraná", sigla: ""},
-		{name: "Pernambuco", sigla: ""},
-		{name: "Piauí", sigla: ""},
-		{name: "Rio de Janeiro", sigla: ""},
-		{name: "Rio Grande do Norte", sigla: ""},
-		{name: "Rio Grande do Sul", sigla: ""},
-		{name: "Rondônia", sigla: ""},
-		{name: "Roraima", sigla: ""},
-		{name: "Santa Catarina", sigla: ""},
-		{name: "São Paulo", sigla: ""},
-		{name: "Sergipe", sigla: ""},
-		{name: "Tocantins", sigla: ""}
+		{name: "Acre", 					sigla: "AC"},
+		{name: "Alagoas", 				sigla: "AL"},
+		{name: "Amapá", 				sigla: "AP"},
+		{name: "Amazonas", 				sigla: "AM"},
+		{name: "Bahia ", 				sigla: "BA"},
+		{name: "Ceará", 				sigla: "CE"},
+		{name: "Distrito Federal", 		sigla: "DF"},
+		{name: "Espírito Santo", 		sigla: "ES"},
+		{name: "Goiás ", 				sigla: "GO"},
+		{name: "Maranhão", 				sigla: "MA"},
+		{name: "Mato Grosso", 			sigla: "MT"},
+		{name: "Mato Grosso do Sul",	sigla: "MS"},
+		{name: "Minas Gerais", 			sigla: "MG"},
+		{name: "Pará", 					sigla: "PA"},
+		{name: "Paraíba", 				sigla: "PB"},
+		{name: "Paraná", 				sigla: "PR"},
+		{name: "Pernambuco", 			sigla: "PE"},
+		{name: "Piauí", 				sigla: "PI"},
+		{name: "Rio de Janeiro", 		sigla: "RJ"},
+		{name: "Rio Grande do Norte",	sigla: "RN"},
+		{name: "Rio Grande do Sul", 	sigla: "RS"},
+		{name: "Rondônia", 				sigla: "RO"},
+		{name: "Roraima", 				sigla: "RR"},
+		{name: "Santa Catarina", 		sigla: "SC"},
+		{name: "São Paulo", 			sigla: "SP"},
+		{name: "Sergipe", 				sigla: "SE"},
+		{name: "Tocantins", 			sigla: "TO"},
 	]
-})
+
+}).directive('noRepeat', function() {
+	return {
+		require: 'ngModel',
+		link: function(scope, element, attr, mCtrl) {
+		function myValidation(value) {
+			if (attr.noRepeat != value) {
+			mCtrl.$setValidity('charE', true);
+			} else {
+			mCtrl.$setValidity('charE', false);
+			}
+			return value;
+		}
+		mCtrl.$parsers.push(myValidation);
+		}
+	};
+}).directive('iqual', function() {
+	return {
+		require: 'ngModel',
+		link: function(scope, element, attr, mCtrl) {
+		function myValidation(value) {
+			if (attr.iqual == value) {
+			mCtrl.$setValidity('iqual', true);
+			} else {
+			mCtrl.$setValidity('iqual', false);
+			}
+			return value;
+		}
+		mCtrl.$parsers.push(myValidation);
+		}
+	};
+});
