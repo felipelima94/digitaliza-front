@@ -1,4 +1,34 @@
-app.controller('listFiles', function($scope){
+angular.module('app')
+.controller('managerFiles', function($scope, $http){
+    
+    $scope.rightBar = false;
+
+    $scope.hideRightBar = () => {
+        if($scope.rightBar) { 
+            document.querySelector('.rightBar').style.display = 'none';
+            $scope.rightBar = !$scope.rightBar;
+        }
+    }
+    document.querySelector('.userInfo').addEventListener('click', (e) => {
+        if(!$scope.rightBar) {
+            document.querySelector('.rightBar').style.display = 'block';
+            $scope.rightBar = !$scope.rightBar;
+        } else if($scope.rightBar) { 
+            document.querySelector('.rightBar').style.display = 'none';
+            $scope.rightBar = !$scope.rightBar;
+        }
+        e.stopPropagation();
+    })
+    document.querySelector('.rightBar').addEventListener('click', (e) => {
+        e.stopPropagation();
+    })
+    document.querySelector('body').addEventListener('click', () => {
+        if($scope.rightBar) {
+            document.querySelector('.rightBar').style.display = 'none'
+            $scope.rightBar = !$scope.rightBar;
+        }
+    });
+
     $scope.files = [
         {
             type: typeFile('folder'),

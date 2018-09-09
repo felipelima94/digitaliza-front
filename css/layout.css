@@ -14,6 +14,7 @@ body {
 .page {
     display: grid;
     grid-template-areas: "header" "nav" "content";
+    background-color: #E1E1E1;
 }
 
 /* cabecario */
@@ -72,21 +73,22 @@ body {
     display: inline-block;
 }
 
-.header .right .userInfo {
+.userInfo {
     margin: 0 15px 0 0;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
-.header .userInfo .userName {
+.userInfo .userName {
     display: inline-block;
     font-size: 1.3em;
     font-weight: bold;
 }
-.header .userInfo .userPhoto {
+.userInfo .userPhoto {
     width: 60px;
     height: 60px;
     margin-left: 5px;
-    border: solid 0.1em #707070;
+    border: solid 0.1em #ddd;
     border-radius: 50%;
     background: url("../img/UserPhoto.png");
     background-repeat: no-repeat;
@@ -95,6 +97,48 @@ body {
     display: inline-block;
 }
 
+/* Right Bar */
+.rightBar {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    width: 300px;
+    height: 100%;
+    display: none;
+    background-color: white;
+    text-align: right;
+    box-sizing: border-box;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 99;
+}
+
+.rightBar .userInfo {
+    margin: 0;
+    height: 105px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #6699FF;
+    justify-content: right;
+}
+
+.rightBar-menu {
+    margin: 20px;
+}
+.rightBar-menu h2 {
+    font-size: 1.2em;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.rightBar-menu li {
+    list-style: none;
+    margin: 0 -10px;
+    padding: 10px;
+}
+.rightBar-menu li:hover {
+    background-color: #E1E1E1;
+    cursor: pointer;
+}
 /* menu Navegacao */
 .nav {
     display: flex;

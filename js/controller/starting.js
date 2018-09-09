@@ -66,13 +66,16 @@ angular.module('app').config(function ($qProvider) {
 	}
 
 	$scope.formUser = {}
+	$scope.empresaData = JSON.parse(sessionStorage.getItem("empresa"));
+	sessionStorage.removeItem("empresa");
 	$scope.registerUser = () => {
 		$scope.data = {
 			usuario: $scope.formUser,
-			empresa: JSON.parse(sessionStorage.getItem("empresa"))
+			empresa: $scope.empresaData
 		}
 		$.post($scope.apiUrl+'/new/Empresa', $scope.data).then( response => {
-			console.log("data", response);
+			let token = "Bearer "+response.success.token;
+			sessionStorage.setItem("token", JSON.stringify(token));
 			window.location.href="/files"
 		}, err => {
 			console.error(err);
@@ -100,7 +103,7 @@ angular.module('app').config(function ($qProvider) {
 			// $scope.status = 'You cancelled the dialog.';
 		});
 	};
-	function DialogController($scope, $mdDialog) {
+	function DialogController($scope, $mdDialog, $mdToast) {
 		$scope.hide = function() {
 			$mdDialog.hide();
 		};
@@ -122,15 +125,24 @@ angular.module('app').config(function ($qProvider) {
 						window.location.href="/files"
 					},
 					error: err => {
-						alert("Usuario ou senha incorreto")
+						$scope.showSimpleToast();
+						// alert("Usuario ou senha incorreto")
 					}
 				})
 			}
 			// $mdDialog.hide(answer);
 		};
-	}
 
-	console.log("$scope", $scope);
+		$scope.showSimpleToast = function() {
+		
+			$mdToast.show(
+			  $mdToast.simple()
+				.textContent('Nome de usuário ou senha incorretos!')
+				.position('bottom right ')
+				.hideDelay(5000)
+			);
+		};
+	}
 
 	$scope.estados = [
 		{name: "Acre", 					sigla: "AC"},
