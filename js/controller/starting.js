@@ -1,9 +1,12 @@
 angular.module('app').config(function ($qProvider) {
 		$qProvider.errorOnUnhandledRejections(false);
 })
-.controller("starting", ($scope, $routeParams, $http, $mdDialog) => {
+.controller("starting", ($scope, $routeParams, $http, $mdDialog, auth) => {
 
 	$scope.apiUrl = 'http://localhost:8000/api'
+
+	// verifica se está logado
+	auth.auth();
 
 	if($routeParams.opt == "representante") {
 		$scope.template = {

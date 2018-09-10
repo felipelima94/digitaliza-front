@@ -1,5 +1,7 @@
+let urlApi = "http://localhost:8000/api";
+
 angular.module('app')
-.controller('managerFiles', function($scope, $http){
+.controller('managerFiles', function($scope, $http, auth){
     
     $scope.rightBar = false;
 
@@ -29,7 +31,85 @@ angular.module('app')
         }
     });
 
-    $scope.files = [
+    //////////// D O C U M E N T ////////////////////
+    auth.getUser().then(data => {
+        let user = data;
+        $.ajax({
+            method: 'GET',
+            url: urlApi+'/empresa-by-user/'+user.id,
+            headers: {
+                "Accept": 'application/json',
+                "Authorization": JSON.parse(sessionStorage.getItem('token')),
+            },
+            success: data => {
+                data.forEach(data => {
+                    getDocumentos(data);
+                });
+            },
+            error: err => {
+                window.location.href="/home";
+                console.error("Error :: Unauthorised");
+            }
+        });
+    });
+
+    // $scope.files = [
+    //     {
+    //         type: typeFile('folder'),
+    //         name: 'Pasta 007',
+    //         author: 'James Bond',
+    //         date: '07/07/1962',
+    //         size: '--'
+    //     }
+    // ];
+    let getDocumentos = data => {
+        console.log("get document")
+        $http.get(urlApi+'/documentos/'+data.empresa_id, {headers: {"Authorization": JSON.parse(sessionStorage.getItem('token'))}})
+            .then(response => {
+                docs = response.data
+                $scope.files = []
+                docs.forEach(doc => {
+                    
+                    let date = doc.updated_at;
+
+                    date = date.split(" ")[0];
+                    date = date.split("-");
+                    lastUpdate = `${date[2]}/${date[1]}/${date[0]}`
+                    
+                    $scope.files.push({
+                        'type': typeFile('folder'),
+                        'name': doc.nome_arquivo,
+                        'author': doc.usuario.first_name,
+                        'date': lastUpdate,
+                        'size': '--'
+                    })
+                    
+                });
+            })
+        $.ajax({
+            method: 'GET',
+            url: urlApi+'/documentos/'+data.empresa_id,
+            headers: {"Authorization": JSON.parse(sessionStorage.getItem('token'))},
+            success: data => {
+                $scope.files = data.forEach(doc => {
+                    return {
+                        'type': typeFile('folder'),
+                        'name': doc.nome_arquivo,
+                        'author': doc.usuario.first_name,
+                        'date': doc.updated_at.date,
+                        'size': '--'
+                    }
+                    
+                });
+                // console.log($scope.files);
+            }, 
+            error: error => {
+            console.error(error)
+            }
+        });
+    }
+
+    $scope.file = [
         {
             type: typeFile('folder'),
             name: 'Pasta 007',
