@@ -1,14 +1,29 @@
 (function () {
     "use strict";
 
-    angular.module('app').service('auth', function ($http) {
-        let urlApi = 'http://localhost:8000/api';
-        return {
-            getUser: function () {
-                return $http.post(urlApi+'/get-details', null, {headers: {
+    angular.module('app').service('auth', function ($http, http) {
+        let headers = {
+                headers: {
                     "Accept": 'application/json',
                     "Authorization": JSON.parse(sessionStorage.getItem('token')),
-                }}).then( response => {
+                }
+            }
+        return {
+            get: (url) => {
+                return http.get(url, headers)
+            },
+            post: (url, data) => {
+                return http.post(url, data, headers)
+            },
+            put: (url, data) => {
+                return http.put(url, data, headers)
+            },
+            delete: (url, data) => {
+                return http.delete(url, data, headers)
+            },
+            getUser: function () {
+                return http.post('/get-details', null, headers)
+                .then( response => {
                     return response.data.success;
                 }, error => { 
                     sessionStorage.removeItem('token');
@@ -17,14 +32,7 @@
                 })
             },
             logout : () => {
-                $http({
-                    method: 'POST',
-                    url: urlApi+'/logout',
-                    headers: {
-                        "Accept": 'application/json',
-                        "Authorization": JSON.parse(sessionStorage.getItem('token')),
-                    }
-                }).then( data => {
+                return http.post('/logout', null, headers).then( data => {
                     sessionStorage.removeItem('token');
                     window.location.href="/home"
                 }).catch(err => {
@@ -32,10 +40,9 @@
                 });
             },
             auth: () => {
-                return $http.post(urlApi+'/get-details', null, {headers: {
-                    "Accept": 'application/json',
-                    "Authorization": JSON.parse(sessionStorage.getItem('token')),
-                }}).then( response => {
+                http.post('/get-details', null, headers)
+                .then( response => {
+                    console.log(headers)
                     window.location.href="/files";
                 }, error => { 
                     sessionStorage.removeItem('token');

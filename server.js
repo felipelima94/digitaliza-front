@@ -21,7 +21,7 @@ app.all('/*', function(req, res, next) {
     // Just send the index.html for other files to support HTML5Mode
     res.sendFile('index.html', { root: __dirname });
 });
-let address = "127.0.0.1";
+let address = "192.168.15.24";
 // let address = "192.168.15.14";
 let port = 3000;
 server.listen(port,address, () => {

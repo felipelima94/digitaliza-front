@@ -1,7 +1,5 @@
-let urlApi = "http://localhost:8000/api";
-
 angular.module('app')
-.controller('managerFiles', function($scope, $http, auth){
+.controller('managerFiles', function($scope, $http, http, auth){
     
     $scope.rightBar = false;
 
@@ -31,26 +29,29 @@ angular.module('app')
         }
     });
 
+    let headers = {
+        headers: {
+            "Accept": 'application/json',
+            "Authorization": JSON.parse(sessionStorage.getItem('token')),
+        }
+    }
+
     //////////// D O C U M E N T ////////////////////
     auth.getUser().then(data => {
         let user = data;
-        $.ajax({
-            method: 'GET',
-            url: urlApi+'/empresa-by-user/'+user.id,
-            headers: {
-                "Accept": 'application/json',
-                "Authorization": JSON.parse(sessionStorage.getItem('token')),
-            },
-            success: data => {
-                data.forEach(data => {
-                    getDocumentos(data);
-                });
-            },
-            error: err => {
-                window.location.href="/home";
-                console.error("Error :: Unauthorised");
-            }
-        });
+        console.log(headers);
+        
+        http.get('/empresa-by-user/'+user.id, headers).then(response => {
+            console.log(response);
+            
+            data = response.data;
+            data.forEach(data => {
+                getDocumentos(data);
+            })
+        }, error => {
+            // window.location.href="/home";
+            console.error("Error::Unauthorised");
+        })
     });
 
     // $scope.files = [
@@ -63,49 +64,30 @@ angular.module('app')
     //     }
     // ];
     let getDocumentos = data => {
-        console.log("get document")
-        $http.get(urlApi+'/documentos/'+data.empresa_id, {headers: {"Authorization": JSON.parse(sessionStorage.getItem('token'))}})
-            .then(response => {
-                docs = response.data
-                $scope.files = []
-                docs.forEach(doc => {
-                    
-                    let date = doc.updated_at;
+        http.get('/documentos/'+data.empresa_id, {headers: {"Authorization": JSON.parse(sessionStorage.getItem('token'))}})
+        .then(response => {
+            console.log("get document", response)
+            docs = response.data
+            $scope.files = []
+            docs.forEach(doc => {
+                
+                let date = doc.updated_at;
 
-                    date = date.split(" ")[0];
-                    date = date.split("-");
-                    lastUpdate = `${date[2]}/${date[1]}/${date[0]}`
-                    
-                    $scope.files.push({
-                        'type': typeFile('folder'),
-                        'name': doc.nome_arquivo,
-                        'author': doc.usuario.first_name,
-                        'date': lastUpdate,
-                        'size': '--'
-                    })
-                    
-                });
-            })
-        $.ajax({
-            method: 'GET',
-            url: urlApi+'/documentos/'+data.empresa_id,
-            headers: {"Authorization": JSON.parse(sessionStorage.getItem('token'))},
-            success: data => {
-                $scope.files = data.forEach(doc => {
-                    return {
-                        'type': typeFile('folder'),
-                        'name': doc.nome_arquivo,
-                        'author': doc.usuario.first_name,
-                        'date': doc.updated_at.date,
-                        'size': '--'
-                    }
-                    
-                });
-                // console.log($scope.files);
-            }, 
-            error: error => {
-            console.error(error)
-            }
+                date = date.split(" ")[0];
+                date = date.split("-");
+                lastUpdate = `${date[2]}/${date[1]}/${date[0]}`
+                
+                $scope.files.push({
+                    'type': typeFile('folder'),
+                    'name': doc.nome_arquivo,
+                    'author': doc.usuario.first_name,
+                    'date': lastUpdate,
+                    'size': '--'
+                })
+                
+            });
+        }, error => {
+            console.error(error);
         });
     }
 

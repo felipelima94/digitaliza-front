@@ -1,9 +1,7 @@
 angular.module('app').config(function ($qProvider) {
 		$qProvider.errorOnUnhandledRejections(false);
 })
-.controller("starting", ($scope, $routeParams, $http, $mdDialog, auth) => {
-
-	$scope.apiUrl = 'http://localhost:8000/api'
+.controller("starting", ($scope, $routeParams, $http, $mdDialog, auth, http) => {
 
 	// verifica se está logado
 	auth.auth();
@@ -49,7 +47,8 @@ angular.module('app').config(function ($qProvider) {
 		// Nome Fantasia 
 		// CNPJ
 		// Inscrição Estadual
-		$.post($scope.apiUrl+"/verify/empresa", $scope.formEmpresa).then( response => {
+		http.post("/verify/empresa", $scope.formEmpresa).then( response => {
+			response = response.data
 			if(response.length > 0) {
 				response.forEach(element => {
 					$scope[element] = $scope.formEmpresa[element];
@@ -57,14 +56,10 @@ angular.module('app').config(function ($qProvider) {
 				});
 				document.querySelector("[name="+response[0]+"]").focus()
 			} else {
-				// $.post("http://localhost:8000/api/empresa", $scope.formEmpresa).then( response => {
-				// 	console.log("Cadastro de empresa", response);
-				// 	alert("cadastrado com sucesso");
-				// })
 				sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
 				window.location.href="/cadastro/representante";
 			}
-		}).catch(function (err) { console.error(err)});
+		}, err => { console.error(err)});
 		
 	}
 
@@ -76,8 +71,8 @@ angular.module('app').config(function ($qProvider) {
 			usuario: $scope.formUser,
 			empresa: $scope.empresaData
 		}
-		$.post($scope.apiUrl+'/new/Empresa', $scope.data).then( response => {
-			let token = "Bearer "+response.success.token;
+		http.post('/new/Empresa', $scope.data).then( response => {
+			let token = "Bearer "+response.data.success.token;
 			sessionStorage.setItem("token", JSON.stringify(token));
 			window.location.href="/files"
 		}, err => {
@@ -117,20 +112,12 @@ angular.module('app').config(function ($qProvider) {
 
 		$scope.answer = function(answer) {
 			if(answer == 'login') {
-				let loginUrl = 'http://localhost:8000/api/login';
-				$.ajax({
-					method: 'POST',
-					url: loginUrl,
-					data: $scope.loginField,
-					success: response => {
-						let token = "Bearer "+response.success.token;
-						sessionStorage.setItem("token", JSON.stringify(token));
-						window.location.href="/files"
-					},
-					error: err => {
-						$scope.showSimpleToast();
-						// alert("Usuario ou senha incorreto")
-					}
+				http.post('/login', $scope.loginField, null).then(response => {
+					let token = "Bearer "+response.data.success.token;
+					sessionStorage.setItem("token", JSON.stringify(token));
+					window.location.href="/files"
+				}, error => {
+					$scope.showSimpleToast();
 				})
 			}
 			// $mdDialog.hide(answer);
