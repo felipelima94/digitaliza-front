@@ -118,7 +118,7 @@ body {
     padding: 20px;
     box-sizing: border-box;
     background-color: #6699FF;
-    justify-content: right;
+    justify-content: flex-end;
 }
 
 .rightBar-menu {
