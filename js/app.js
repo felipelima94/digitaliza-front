@@ -1,9 +1,12 @@
 var app = angular.module("app", ["ngRoute", "ngMaterial", 'ngMessages', 'ui.utils.masks', 'idf.br-filters'])
-    .config(($routeProvider, $locationProvider) => {
+    .config(($routeProvider, $locationProvider, $mdThemingProvider) => {
         $locationProvider.html5Mode(true);
 
         $routeProvider
             .when('/files', {
+                templateUrl: 'views/files.html'
+            })
+            .when('/files/:pasta', {
                 templateUrl: 'views/files.html'
             })
             .when('/cadastrar', {
@@ -19,5 +22,9 @@ var app = angular.module("app", ["ngRoute", "ngMaterial", 'ngMessages', 'ui.util
                 templateUrl: "views/content.html"
             })
             .otherwise({redirectTo : '/home'});
-
+            
+            $mdThemingProvider.theme('default')
+                .primaryPalette('blue')
+                .accentPalette('orange')
+                .warnPalette('red');
         });

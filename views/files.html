@@ -19,14 +19,14 @@
 		</div>
 		<div class="userInfo">
 			<div class="userName">{{ user.first_name }}</div>
-			<div class="userPhoto" style="background-image: url('img/{{user.pic}}')"></div>
+			<div class="userPhoto" style="background-image: url('{{user.pic}}')"></div>
 		</div>
 	</header>
 	<!-- menu gerenciamento de conta -->
 	<div class="rightBar" ng-controller="userControll">
-		<div class="userInfo" ng-click="hideRightBar()">
+		<div class="userInfo" onclick="hideRightBar()">
 			<div class="userName">{{ user.first_name }} {{ user.last_name }}</div>
-			<div class="userPhoto" ng-click="showRightBar()" style="background-image: url('img/{{user.pic}}')"></div>
+			<div class="userPhoto" ng-click="showRightBar()" style="background-image: url('{{user.pic}}')"></div>
 		</div>
 		<div class="rightBar-menu">
 			<h2>Gerenciar conta</h2>
@@ -47,15 +47,14 @@
 		<div class="dropdown">
 			<button id="dropbtn" onclick="myFunction()" class="btn btn-blue">Novo</button>
 				<div id="myDropdown" class="dropdown-content">
-					<a href="#novapasta" rel="modal"><div class="icon-folder"></div><p>Nova Pasta</p></a>
-					<a href="#upload" rel="modal"><div class="icon-doc"></div><p>Enviar arquivos</p></a>
-					<a href="#digitalizar" rel="modal"><div class="icon-digi"></div><p>Nova Digitalizar</p></a>
+					<button ng-click="showPrompt($event)" rel="modal"><div class="icon-folder"></div><p>Nova Pasta</p></button>
+					<button ng-click="showPrompt($event)" rel="modal"><div class="icon-doc"></div><p>Enviar arquivos</p></button>
+					<button ng-click="showPrompt($event)" rel="modal"><div class="icon-digi"></div><p>Nova Digitalizar</p></button>
 				</div>
 		</div>
 		<div class="navegacao">
-			<p>Home</p>
-			<p>&nbsp;>&nbsp;</p>
-			<p>Diretorio</p>
+			<p><a href="/files">Home</a></p>
+			<p ng-repeat="r in rastro">&nbsp;>&nbsp;<a ng-href="{{r.link}}">{{r.nome}}</a></p>
 		</div>
 	</nav>
 
@@ -71,14 +70,16 @@
 				<div class="td">Tamanho</div>
 			</div>
 
-			<div  ng-repeat="file in files | orderBy : myOrderByName |  filter : {name : inputSearch }" class="tr">
-				<div class="rowTableFile">
-					<div class="td iconFile" style="background-image: url('{{file.type}}')"></div>
-					<div class="td">{{ file.name }}</div>
-					<div class="td">{{ file.author }}</div>
-					<div class="td">{{ file.date }}</div>
-					<div class="td">{{ file.size }}</div>
-				</div>
+			<div ng-repeat="file in files | orderBy : myOrderByName |  filter : {name : inputSearch }" class="tr">
+				<a ng-href="{{file.link}}">
+					<div class="rowTableFile" type="button">
+						<div class="td iconFile" style="background-image: url('{{file.type}}')"></div>
+						<div class="td">{{ file.name }}</div>
+						<div class="td">{{ file.author }}</div>
+						<div class="td">{{ file.date }}</div>
+						<div class="td">{{ file.size }}</div>
+					</div>
+				</a>
 			</div>
 
 		</div> <!-- tableFiles -->

@@ -47,7 +47,8 @@
                 }, error => { 
                     sessionStorage.removeItem('token');
                 })
-            }
+            },
+            headers: () => headers
         };
     });
 })();

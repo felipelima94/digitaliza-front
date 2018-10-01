@@ -154,6 +154,10 @@ body {
     font-weight: bold;
     color: #707070;
 }
+.nav .navegacao a {
+    color: #707070;
+    text-decoration: none;
+}
 /* conteudo */
 .content {
     grid-area: content;
@@ -170,6 +174,9 @@ body {
 }
 .tableFiles .tr:nth-child(odd) {
     background-color: #F9F9F9F9;
+}
+.tableFiles .tr a {
+    text-decoration: none;
 }
 .tableFiles .rowTableFile {
     height: 46px;

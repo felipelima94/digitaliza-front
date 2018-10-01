@@ -1,21 +1,22 @@
 angular.module('app')
-.controller('managerFiles', function($scope, $http, http, auth){
+.controller('managerFiles', function($scope, $routeParams, $mdDialog, http, auth, date_Helper){
     
-    $scope.rightBar = false;
+    var toglerightBar = false;
 
-    $scope.hideRightBar = () => {
-        if($scope.rightBar) { 
+    hideRightBar = () => {
+        if(toglerightBar) { 
             document.querySelector('.rightBar').style.display = 'none';
-            $scope.rightBar = !$scope.rightBar;
+            toglerightBar = !toglerightBar;
         }
+        console.log("go hider");
     }
     document.querySelector('.userInfo').addEventListener('click', (e) => {
-        if(!$scope.rightBar) {
+        if(!toglerightBar) {
             document.querySelector('.rightBar').style.display = 'block';
-            $scope.rightBar = !$scope.rightBar;
-        } else if($scope.rightBar) { 
+            toglerightBar = !toglerightBar;
+        } else if(toglerightBar) { 
             document.querySelector('.rightBar').style.display = 'none';
-            $scope.rightBar = !$scope.rightBar;
+            toglerightBar = !toglerightBar;
         }
         e.stopPropagation();
     })
@@ -23,9 +24,9 @@ angular.module('app')
         e.stopPropagation();
     })
     document.querySelector('body').addEventListener('click', () => {
-        if($scope.rightBar) {
+        if(toglerightBar) {
             document.querySelector('.rightBar').style.display = 'none'
-            $scope.rightBar = !$scope.rightBar;
+            toglerightBar = !$scope.rightBar;
         }
     });
 
@@ -36,24 +37,62 @@ angular.module('app')
         }
     }
 
+    $scope.dadosUtil = {
+        usuario_id: "",
+        empresa_id: "",
+        storage: "",
+    }
     //////////// D O C U M E N T ////////////////////
     auth.getUser().then(data => {
         let user = data;
-        console.log(headers);
+        $scope.dadosUtil.usuario_id = user.id;
         
         http.get('/empresa-by-user/'+user.id, headers).then(response => {
             console.log(response);
             
             data = response.data;
+            console.log(data);
+            
             data.forEach(data => {
-                getDocumentos(data);
+                $scope.dadosUtil.empresa_id = data.empresa_id;
+                let storage = data.storage
+                if($routeParams.pasta > 0) {
+                    storage = $routeParams.pasta
+                }
+                $scope.dadosUtil.storage = storage;
+                $scope.getFolders(storage);
             })
         }, error => {
             // window.location.href="/home";
             console.error("Error::Unauthorised");
         })
     });
-
+    $scope.showPrompt = function(ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.prompt()
+          .title('Criar Nova Pasta')
+          .placeholder('Nome da pasta')
+          .ariaLabel('Nome da pasta')
+          .targetEvent(ev)
+          .required(true)
+          .ok('Criar')
+          .cancel('Cancelar');
+    
+        $mdDialog.show(confirm).then(function(result) {
+            let data = {
+                nome: result,
+                usuario_id: $scope.dadosUtil.usuario_id,
+                empresa_id: $scope.dadosUtil.empresa_id,
+                raiz: $scope.dadosUtil.storage
+            }
+            http.post('/pasta', data, headers).then(response => {
+                data = response.data;
+                window.location.href="/files/"+data.id;
+            }, error => {
+                console.error(error);
+            })
+        }, function() {});
+    };
     // $scope.files = [
     //     {
     //         type: typeFile('folder'),
@@ -63,26 +102,63 @@ angular.module('app')
     //         size: '--'
     //     }
     // ];
-    let getDocumentos = data => {
-        http.get('/documentos/'+data.empresa_id, {headers: {"Authorization": JSON.parse(sessionStorage.getItem('token'))}})
+    $scope.getFolders = (storage) => {
+        console.log(storage);
+        $scope.rastro = [];
+        http.get('/pasta/rastro/'+storage, headers)
+        .then(response => {
+            console.log("rastro", response);
+            
+            let rastro = response.data;
+            rastro.forEach(r => {
+                $scope.rastro.push({
+                    link: '/files/'+r.id,
+                    nome: r.nome
+                })
+            })
+        })
+
+        $scope.files = []
+        http.get('/pasta/'+storage, headers)
+            .then(response => {
+                console.log("pastas", response);
+                let folders = response.data;
+                
+                
+                folders.forEach(folder => {
+                    lastUpdate = date_Helper.timestampToDate(folder.updated_at);
+                    $scope.files.push({
+                        'link': "/files/"+folder.id,
+                        'type': typeFile('folder'),
+                        'name': folder.nome,
+                        'author': folder.usuario.first_name,
+                        'date': lastUpdate,
+                        'size': '--'
+                    })
+                })
+            })
+        getDocumentos(storage);
+    }
+    let getDocumentos = storage => {
+        http.get('/documentos/'+storage, {headers: {"Authorization": JSON.parse(sessionStorage.getItem('token'))}})
         .then(response => {
             console.log("get document", response)
             docs = response.data
-            $scope.files = []
             docs.forEach(doc => {
                 
                 let date = doc.updated_at;
 
-                date = date.split(" ")[0];
-                date = date.split("-");
-                lastUpdate = `${date[2]}/${date[1]}/${date[0]}`
+                // date = date.split(" ")[0];
+                // date = date.split("-");
+                // lastUpdate = `${date[2]}/${date[1]}/${date[0]}`
+                lastUpdate = date_Helper.timestampToDate(date);
                 
                 $scope.files.push({
-                    'type': typeFile('folder'),
+                    'type': typeFile(doc.tipo),
                     'name': doc.nome_arquivo,
                     'author': doc.usuario.first_name,
                     'date': lastUpdate,
-                    'size': '--'
+                    'size': doc.tamanho
                 })
                 
             });
@@ -186,10 +262,10 @@ angular.module('app')
 
 function typeFile(type) {
     if(type == "folder") {
-        return 'img/folder.png';
-    } else if (type == "pdf") {
-        return "img/doc.png";
-    } else if (type == "pics") {
-        return "img/pics_icon.png";
+        return '/img/folder.png';
+    } else if (type == "pics" || type == 'jpg' || type == 'jpeg' || type == 'png' || type == 'gif') {
+        return "/img/pics_icon.png";
+    } else {
+        return "/img/doc.png";
     }
 }
