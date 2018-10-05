@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    angular.module('app').service('auth', function ($http, http) {
+    angular.module('app').service('auth', function ($http, $location, http) {
         let headers = {
                 headers: {
                     "Accept": 'application/json',
@@ -27,14 +27,14 @@
                     return response.data.success;
                 }, error => { 
                     sessionStorage.removeItem('token');
-                    window.location.href="/home";
+                    $location.path('/home');
                     console.error("Error :: Unauthorised");
                 })
             },
             logout : () => {
                 return http.post('/logout', null, headers).then( data => {
                     sessionStorage.removeItem('token');
-                    window.location.href="/home"
+                    $location.path('/home');
                 }).catch(err => {
                     console.error("Error", err);
                 });
@@ -43,7 +43,7 @@
                 http.post('/get-details', null, headers)
                 .then( response => {
                     console.log(headers)
-                    window.location.href="/files";
+                    $location.path('/files');
                 }, error => { 
                     sessionStorage.removeItem('token');
                 })

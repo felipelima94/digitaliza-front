@@ -1,0 +1,33 @@
+<style>
+    .simpleUpload {
+        width: 500px;
+        /* height: 300px; */
+        padding: 20px;
+    }
+
+    .form {
+    }
+    .btns {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+<div class="simpleUpload">
+    <h1>Enviar Arquivo</h1>
+    <form class="form" name="simpleUpload" role="form" enctype="multipart/form-data">
+        <div layout="row">
+            <md-input-container flex="100">
+                <label>Selecione um arquivo</label>
+                <input id="simpleUploadField" type="file" required name="file" ng-model="simpleUpload.file">
+                <div ng-messages="simpleUpload.file.$error">
+                    <div ng-message="required">Selecione um arquivo antes de enviar.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div class="btns">
+            <button class="btn btn-red" ng-click="cancel('cancel')" type="button">Cancelar</button>
+            <button class="btn btn-blue" ng-disabled="simpleUpload.$invalid" ng-click="answer('upload')" type="submit">Enviar</button>
+        </div>
+    </form>
+</div>

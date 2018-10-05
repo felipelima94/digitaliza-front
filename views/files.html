@@ -48,8 +48,8 @@
 			<button id="dropbtn" onclick="myFunction()" class="btn btn-blue">Novo</button>
 				<div id="myDropdown" class="dropdown-content">
 					<button ng-click="showPrompt($event)" rel="modal"><div class="icon-folder"></div><p>Nova Pasta</p></button>
-					<button ng-click="showPrompt($event)" rel="modal"><div class="icon-doc"></div><p>Enviar arquivos</p></button>
-					<button ng-click="showPrompt($event)" rel="modal"><div class="icon-digi"></div><p>Nova Digitalizar</p></button>
+					<button ng-click="simpleUpload($event)" rel="modal"><div class="icon-doc"></div><p>Enviar arquivos</p></button>
+					<button ng-click="" rel="modal"><div class="icon-digi"></div><p>Nova Digitalizar</p></button>
 				</div>
 		</div>
 		<div class="navegacao">
@@ -71,7 +71,7 @@
 			</div>
 
 			<div ng-repeat="file in files | orderBy : myOrderByName |  filter : {name : inputSearch }" class="tr">
-				<a ng-href="{{file.link}}">
+				<a ng-href="{{file.link}}" target="{{file.target}}">
 					<div class="rowTableFile" type="button">
 						<div class="td iconFile" style="background-image: url('{{file.type}}')"></div>
 						<div class="td">{{ file.name }}</div>

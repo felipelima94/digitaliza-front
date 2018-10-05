@@ -1,7 +1,7 @@
 angular.module('app').config(function ($qProvider) {
 		$qProvider.errorOnUnhandledRejections(false);
 })
-.controller("starting", ($scope, $routeParams, $http, $mdDialog, auth, http) => {
+.controller("starting", ($scope, $routeParams, $http, $mdDialog, auth, http, $location) => {
 
 	// verifica se está logado
 	auth.auth();
@@ -25,7 +25,7 @@ angular.module('app').config(function ($qProvider) {
 	}
 
 	$scope.goHome = () => {
-		window.location.href="/home";
+		$location.url("/home");
 	}
 
 	$scope.formEmpresa = {
@@ -57,7 +57,7 @@ angular.module('app').config(function ($qProvider) {
 				document.querySelector("[name="+response[0]+"]").focus()
 			} else {
 				sessionStorage.setItem("empresa", JSON.stringify($scope.formEmpresa));
-				window.location.href="/cadastro/representante";
+				$location.url("/cadastro/representante");
 			}
 		}, err => { console.error(err)});
 		
@@ -71,10 +71,12 @@ angular.module('app').config(function ($qProvider) {
 			usuario: $scope.formUser,
 			empresa: $scope.empresaData
 		}
-		http.post('/new/Empresa', $scope.data).then( response => {
+		http.post('/new/empresa', $scope.data).then( response => {
 			let token = "Bearer "+response.data.success.token;
 			sessionStorage.setItem("token", JSON.stringify(token));
+			// $location.url("/files");
 			window.location.href="/files"
+
 		}, err => {
 			console.error(err);
 		})
@@ -115,6 +117,7 @@ angular.module('app').config(function ($qProvider) {
 				http.post('/login', $scope.loginField, null).then(response => {
 					let token = "Bearer "+response.data.success.token;
 					sessionStorage.setItem("token", JSON.stringify(token));
+					// $location.path("/files")
 					window.location.href="/files"
 				}, error => {
 					$scope.showSimpleToast();
