@@ -1,0 +1,43 @@
+<style>
+    .digitalizaUpload {
+        width: 500px;
+        /* height: 300px; */
+        padding: 20px;
+    }
+
+    .form {
+    }
+    .btns {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+<div class="digitalizaUpload">
+    <h1>Enviar Arquivo</h1>
+    <form class="form" name="digitalizaUpload" role="form" enctype="multipart/form-data">
+        <div layout="row">
+            <md-input-container flex="100">
+                <label>Nome do arquivo</label>
+                <input type="text" minlength="2" required name="filename" ng-model="digitalizaUploadField.filename">
+                <div ng-messages="digitalizaUpload.filename.$error">
+                    <div ng-message="minlength">Deve ter no minimo 2 caracteres</div>
+                    <div ng-message="required">Este campo é obrigatório.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <md-input-container flex="100">
+                <label>Selecions as imagens</label>
+                <input id="digitalizaUploadField" type="file" name="images[]" ng-model="digitalizaUpload.file" accept="image" multiple>
+                <!-- <div ng-messages="digitalizaUpload.file.$error">
+                    <div ng-message="required">Selecione um arquivo antes de enviar.</div>
+                </div> -->
+            </md-input-container>
+        </div>
+        <div class="btns">
+            <button class="btn btn-red" ng-click="cancel('cancel')" type="button">Cancelar</button>
+            <button class="btn btn-blue" ng-disabled="digitalizaUpload.$invalid" ng-click="answer('upload')" type="submit">Enviar</button>
+        </div>
+    </form>
+</div>

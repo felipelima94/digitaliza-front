@@ -9,7 +9,6 @@ angular.module('app')
             document.querySelector('.rightBar').style.display = 'none';
             toglerightBar = !toglerightBar;
         }
-        console.log("go hider");
     }
     document.querySelector('.userInfo').addEventListener('click', (e) => {
         if(!toglerightBar) {
@@ -49,10 +48,8 @@ angular.module('app')
         self.session.usuario_id = user.id;
         
         http.get('/empresa-by-user/'+user.id, self.headers).then(response => {
-            console.log(response);
             
             data = response.data;
-            console.log(data);
             
             self.session.empresa_id = data.empresa_id;
             let storage = data.storage
@@ -103,11 +100,9 @@ angular.module('app')
     //     }
     // ];
     $scope.getFolders = (storage) => {
-        console.log(storage);
         $scope.rastro = [];
         http.get('/pasta/rastro/'+storage, self.headers)
         .then(response => {
-            console.log("rastro", response);
             
             let rastro = response.data;
             rastro.forEach(r => {
@@ -121,9 +116,7 @@ angular.module('app')
         $scope.files = []
         http.get('/pasta/'+storage, self.headers)
             .then(response => {
-                console.log("pastas", response);
                 let folders = response.data;
-                
                 
                 folders.forEach(folder => {
                     lastUpdate = date_Helper.timestampToDate(folder.updated_at);
@@ -144,18 +137,15 @@ angular.module('app')
     let getDocumentos = storage => {
         http.get('/documentos/'+storage, {headers: {"Authorization": JSON.parse(sessionStorage.getItem('token'))}})
         .then(response => {
-            console.log("get document", response)
             docs = response.data
             docs.forEach(doc => {
                 
-                let date = doc.updated_at;
-
-                // date = date.split(" ")[0];
-                // date = date.split("-");
-                // lastUpdate = `${date[2]}/${date[1]}/${date[0]}`
-                lastUpdate = date_Helper.timestampToDate(date);
-
                 auth.get('/pasta/full-rastro/'+self.session.storage).then(response => {
+                    
+                    let date = doc.updated_at;
+
+                    lastUpdate = date_Helper.timestampToDate(date);
+                    
                     data = response.data;
                     $scope.link = "/documentos/";
                     data.forEach(pasta => {
@@ -180,85 +170,6 @@ angular.module('app')
         });
     }
 
-    $scope.file = [
-        {
-            type: typeFile('folder'),
-            name: 'Pasta 007',
-            author: 'James Bond',
-            date: '07/07/1962',
-            size: '--'
-        },
-        {
-            type: typeFile('folder'),
-            name: 'Get Smart',
-            author: 'Agente 86',
-            date: '18/09/1965',
-            size: '--'
-        },
-        {
-            type: typeFile('pdf'),
-            name: 'Lista de inimigos.pdf',
-            author: 'Agente 86',
-            date: '18/05/2018',
-            size: '86 KB'
-        },
-        {
-            type: typeFile('pdf'),
-            name: 'Novos recrutas.pdf',
-            author: 'Agente K',
-            date: '21/04/2018',
-            size: '25 KB'
-        },
-        {
-            type: typeFile('folder'),
-            name: 'Contabilidade',
-            author: 'SouljaGirl',
-            date: '13/06/2018',
-            size: '--'
-        },
-        {
-            type: typeFile('folder'),
-            name: 'Videos',
-            author: 'SouljaGirl',
-            date: '11/06/2018',
-            size: '--'
-        },
-        {
-            type: typeFile('pics'),
-            name: 'Galera 2017.jpg',
-            author: 'SouljaGirl',
-            date: '16/02/2018',
-            size: '897 KB'
-        },
-        {
-            type: typeFile('pics'),
-            name: 'Foto-12884.jpg',
-            author: 'SouljaGirl',
-            date: '06/08/2017',
-            size: '877 KB'
-        },
-        {
-            type: typeFile('pics'),
-            name: 'Foto-12235.jpg ',
-            author: 'SouljaGirl',
-            date: '06/08/2017',
-            size: '972 KB'
-        },
-        {
-            type: typeFile('pics'),
-            name: 'Foto-12784.jpg',
-            author: 'SouljaGirl',
-            date: '06/08/2017',
-            size: '658 KB'
-        },
-        {
-            type: typeFile('pics'),
-            name: 'Fachada da empresa.jpg',
-            author: 'SouljaGirl',
-            date: '23/11/2017',
-            size: '951 KB'
-        }
-    ]
     // ///////////// DOCUMENT FUNCTION ////////////////// //
     $scope.arrowOrder = "↓"
     $scope.myOrderByName = 'name';
@@ -275,7 +186,7 @@ angular.module('app')
     // /////////// UPLOAD DOCUMENT //////////////// //
     $scope.simpleUpload = function(ev) {
 		$mdDialog.show({
-			controller: DialogController,
+			controller: SimpleUploadController,
 			templateUrl: '/views/upload/simpleUpload/simpleUpload.html',
 			parent: angular.element(document.body),
 			targetEvent: ev,
@@ -291,7 +202,7 @@ angular.module('app')
 		});
     };
     
-	function DialogController($scope, $mdDialog, $mdToast, $scope, $http, $route) {
+	function SimpleUploadController($scope, $mdDialog, $mdToast, $scope, $http, $route) {
 		$scope.hide = function() {
 			$mdDialog.hide();
 		};
@@ -332,6 +243,77 @@ angular.module('app')
                 // })
 
 				http.post('/documento', data, headers).then(response => {
+                    console.log("sending");
+                    console.log(response);
+                    $scope.hide();
+                    $route.reload()
+                    
+                    // window.location.href="/files/"+self.session.storage;
+				}, error => {
+                    $scope.errorToast();
+                    console.error(error);
+                    
+				})
+			}
+			// $mdDialog.hide(answer);
+		};
+
+		$scope.errorToast = function() {
+		
+			$mdToast.show(
+			  $mdToast.simple()
+				.textContent('Erro ao enviar!')
+				.position('bottom right ')
+				.hideDelay(5000)
+			);
+		};
+    }
+    
+    // /////////// DIGITALIZA UPLOAD //////////////// //
+    $scope.digitalizaUpload = function(ev) {
+		$mdDialog.show({
+			controller: DigitalizaUploadController,
+			templateUrl: '/views/upload/digitalizaUpload/digitalizaUpload.html',
+			parent: angular.element(document.body),
+			targetEvent: ev,
+			clickOutsideToClose:true,
+			fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+		})
+		.then(function(answer) {
+			// function answer() in ng-click :: make btn
+			// $scope.status = 'You said the information was "' + answer + '".';
+		}, function() {
+			// função ao fechar
+			// $scope.status = 'You cancelled the dialog.';
+		});
+    };
+    
+	function DigitalizaUploadController($scope, $mdDialog, $mdToast, $scope, $http, $route) {
+		$scope.hide = function() {
+			$mdDialog.hide();
+		};
+
+		$scope.cancel = function() {
+			$mdDialog.cancel();
+        };
+
+		$scope.answer = function(answer) {
+            let data = new FormData();
+            data.append('local_armazenado', self.session.storage);
+            data.append('filename', $scope.digitalizaUploadField.filename)
+            for(i = 0; i < $('#digitalizaUploadField')[0].files.length; i++) {
+                data.append('images[]', $('#digitalizaUploadField')[0].files[i])
+            }
+
+            console.log($('#digitalizaUploadField')[0].files[0]);
+            
+            headers ={headers: {
+                "Authorization": JSON.parse(sessionStorage.getItem('token')),
+                "Content-type": undefined,
+            }}
+            
+			if(answer == 'upload') {
+				http.post('/documento/digitaliza', data, headers).then(response => {
                     console.log("sending");
                     console.log(response);
                     $scope.hide();
