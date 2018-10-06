@@ -138,20 +138,18 @@ angular.module('app')
         http.get('/documentos/'+storage, {headers: {"Authorization": JSON.parse(sessionStorage.getItem('token'))}})
         .then(response => {
             docs = response.data
-            docs.forEach(doc => {
+            auth.get('/pasta/full-rastro/'+self.session.storage).then(response => {
+                data = response.data;
+                $scope.link = "/documentos/";
+                data.forEach(pasta => {
+                    $scope.link += pasta.nome+'/';
+                })
                 
-                auth.get('/pasta/full-rastro/'+self.session.storage).then(response => {
+                docs.forEach(doc => {
                     
                     let date = doc.updated_at;
-
                     lastUpdate = date_Helper.timestampToDate(date);
                     
-                    data = response.data;
-                    $scope.link = "/documentos/";
-                    data.forEach(pasta => {
-                        $scope.link += pasta.nome+'/';
-                    })
-
                     $scope.files.push({
                         'type': typeFile(doc.tipo),
                         'name': doc.nome_arquivo,
@@ -164,9 +162,9 @@ angular.module('app')
                 }, error => console.error(error));
                 
                 
+            }, error => {
+                console.error(error);
             });
-        }, error => {
-            console.error(error);
         });
     }
 
