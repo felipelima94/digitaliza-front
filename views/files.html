@@ -8,16 +8,20 @@
 
 
 <div class="page" ng-controller="managerFiles">
-	<header class="header" ng-controller="userControll">
+	<header class="header">
 		<nav class="menu"></nav>
 		<div class="logo">
 			<!-- <img src="img/logo.png" alt="Logo"> -->
 		</div>
-		<div class="middle search">
-			<input type="text" name="q" class="inputSearch" placeholder="Pesquisar" />
-			<div class="btnBuscar"></div>
-		</div>
-		<div class="userInfo">
+		<!-- <form class="middle search" role="form" name="searchForm" ng-submit="search()">
+			<input type="text" name="searchField" ng-model="searchField" class="inputSearch" placeholder="Pesquisar">
+			<input type="submit" class="btnBuscar" value="">
+		</form> -->
+		<form class="middle search" name="searchForm" ng-submit="search()">
+			<input type="text" name="q" ng-model="searchField" class="inputSearch" placeholder="Pesquisar" />
+			<input type="submit" class="btnBuscar" value="">
+		</form>
+		<div ng-controller="userControll" class="userInfo">
 			<div class="userName">{{ user.first_name }}</div>
 			<div class="userPhoto" style="background-image: url('{{user.pic}}')"></div>
 		</div>
@@ -37,10 +41,10 @@
 		</div>
 	</div>
 
-	<div class="mobile search">
-		<input type="text" name="q" class="inputSearch" placeholder="Pesquisar" />
-		<div class="btnBuscar"></div>
-	</div>
+	<form class="mobile search" name="searchForm" ng-submit="search()">
+		<input type="text" name="q" ng-model="searchField" class="inputSearch" placeholder="Pesquisar" />
+		<input type="submit" class="btnBuscar" value="">
+	</form>
 
 	<!-- Menu gerenciamento -->
 	<nav class="nav">

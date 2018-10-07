@@ -71,6 +71,12 @@ body {
     background: #B8D0FF url("../img/lupa.png") no-repeat center;
     background-size: 30px auto;
     display: inline-block;
+    cursor: pointer;
+}
+.search .btnBuscar:hover {
+    background: rgb(173, 200, 255) url("../img/lupa.png") no-repeat center;
+    background-size: 30px auto;
+
 }
 
 .userInfo {

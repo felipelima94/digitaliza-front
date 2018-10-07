@@ -42,6 +42,47 @@ angular.module('app')
         empresa_id: "",
         storage: "",
     }
+
+    $scope.search = () => {
+        let dataForm = { search: $scope.searchField }
+        if( $scope.searchField ) {
+            console.log("buscando: ", $scope.searchField);
+            http.post('/documento/search', dataForm, self.headers).then(response => {
+                console.log("data found: ", response)
+                docs = response.data
+
+                $scope.files = []
+                docs.forEach(doc => {
+
+                    let date = doc.updated_at;
+                    lastUpdate = date_Helper.timestampToDate(date);
+
+                    localArmazrnado = doc.local_armazenado.id
+                    auth.get('/pasta/full-rastro/'+localArmazrnado).then(response => {
+                        console.log("folder found", response)
+                        data = response.data;
+                        $scope.link = "/documentos/";
+                        data.forEach(pasta => {
+                            $scope.link += pasta.nome+'/';
+                        })
+                        $scope.files.push({
+                            'type': typeFile(doc.tipo),
+                            'name': doc.nome_arquivo,
+                            'author': doc.usuario.first_name,
+                            'date': lastUpdate,
+                            'size': doc.tamanho,
+                            'link': http.serverUrl($scope.link+doc.nome_arquivo),
+                            'target': '_blank'
+                        })
+                        console.log("files", $scope.files);
+                    })
+                })
+            })
+        } else {
+            $scope.getFolders(self.session.storage)
+        }
+    }
+
     // ///////// F O L D E R //////// //
     auth.getUser().then(data => {
         let user = data;
@@ -100,6 +141,7 @@ angular.module('app')
     //     }
     // ];
     $scope.getFolders = (storage) => {
+        console.log(storage)
         $scope.rastro = [];
         http.get('/pasta/rastro/'+storage, self.headers)
         .then(response => {
