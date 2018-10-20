@@ -1,22 +1,27 @@
 <title>Digitaliza.org</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<link type="text/css" rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/layoutMobile.css">
+<!-- <link type="text/css" rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/layoutMobile.css"> -->
 <!-- <link type="text/css" rel="stylesheet" href="css/style.css"> -->
 <link rel="stylesheet" href="css/menu.css">
 <link rel="stylesheet" href="css/modal.css">
+<style>
+	body { background-color: #E1E1E1; }
+</style>
 
 
 <div class="page" ng-controller="managerFiles">
 	<header class="header">
-		<nav class="menu"></nav>
+		<nav id="iconMobileMenu" onclick="openMobileMenu()" class="menu">
+			<div id="mobileMenu" class="dropdown-content">
+				<button ng-click="showPrompt($event)" rel="modal"><div class="icon-folder"></div><p>Nova Pasta</p></button>
+				<button ng-click="simpleUpload($event)" rel="modal"><div class="icon-doc"></div><p>Enviar arquivos</p></button>
+				<button ng-click="digitalizaUpload($event)" rel="modal"><div class="icon-digi"></div><p>Nova Digitalizar</p></button>
+			</div>
+		</nav>
 		<div class="logo">
 			<!-- <img src="img/logo.png" alt="Logo"> -->
 		</div>
-		<!-- <form class="middle search" role="form" name="searchForm" ng-submit="search()">
-			<input type="text" name="searchField" ng-model="searchField" class="inputSearch" placeholder="Pesquisar">
-			<input type="submit" class="btnBuscar" value="">
-		</form> -->
 		<form class="middle search" name="searchForm" ng-submit="search()">
 			<input type="text" name="q" ng-model="searchField" class="inputSearch" placeholder="Pesquisar" />
 			<input type="submit" class="btnBuscar" value="">
@@ -28,7 +33,7 @@
 	</header>
 	<!-- menu gerenciamento de conta -->
 	<div class="rightBar" ng-controller="userControll">
-		<div class="userInfo" onclick="hideRightBar()">
+		<div class="userInfo" ng-click="hideRightBar()">
 			<div class="userName">{{ user.first_name }} {{ user.last_name }}</div>
 			<div class="userPhoto" ng-click="showRightBar()" style="background-image: url('{{user.pic}}')"></div>
 		</div>

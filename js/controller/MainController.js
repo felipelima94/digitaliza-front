@@ -1,10 +1,11 @@
 self = this;
+
 angular.module('app')
 .controller('managerFiles', function($scope, $routeParams, $mdDialog, http, auth, date_Helper, $location){
 	
 	var toglerightBar = false;
 
-	hideRightBar = () => {
+	$scope.hideRightBar = () => {
 		if(toglerightBar) { 
 			document.querySelector('.rightBar').style.display = 'none';
 			toglerightBar = !toglerightBar;
@@ -389,8 +390,13 @@ angular.module('app')
 
 	$scope.editFile = function(ev, file) {
 		// Appending dialog to document.body to cover sidenav in docs app
-		let fileName = file.name.split('.')[0]
-		let tempType = file.name.split('.')[1]
+		let fileName, tempType;
+		if(file.edit != 'folder') {
+			fileName = file.name.split('.')[0]
+			tempType = file.name.split('.')[1]
+		} else {
+			fileName = file.name
+		}
 		var confirm = $mdDialog.prompt()
 		  .title('Alterar')
 		  .textContent('Nome')
@@ -403,7 +409,10 @@ angular.module('app')
 		  .cancel('Cancelar');
 	
 		$mdDialog.show(confirm).then(function(result) {
-			file.name = result+'.'+tempType;
+			if(file.edit == 'folder')
+				file.name = result
+			else
+				file.name = result+'.'+tempType;
 			$scope.status = 'You decided to name your dog ' + result + '.';
 		}, function() {
 		  $scope.status = 'You didn\'t name your dog.';

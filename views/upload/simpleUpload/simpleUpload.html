@@ -1,19 +1,4 @@
-<style>
-    .simpleUpload {
-        width: 500px;
-        /* height: 300px; */
-        padding: 20px;
-    }
-
-    .form {
-    }
-    .btns {
-        display: flex;
-        justify-content: space-between;
-    }
-</style>
-
-<div class="simpleUpload">
+<div class="modalLayout">
     <h1>Enviar Arquivo</h1>
     <form class="form" name="simpleUpload" role="form" enctype="multipart/form-data">
         <div layout="row">
@@ -25,7 +10,7 @@
                 </div>
             </md-input-container>
         </div>
-        <div class="btns">
+        <div class="modal-btns">
             <button class="btn btn-red" ng-click="cancel('cancel')" type="button">Cancelar</button>
             <button class="btn btn-blue" ng-disabled="simpleUpload.$invalid" ng-click="answer('upload')" type="submit">Enviar</button>
         </div>

@@ -1,19 +1,4 @@
-<style>
-    .loginPage {
-        width: 500px;
-        /* height: 300px; */
-        padding: 20px;
-    }
-
-    .form {
-    }
-    .btns-login {
-        display: flex;
-        justify-content: space-between;
-    }
-</style>
-
-<div class="loginPage">
+<div class="modalLayout">
     <h1>Acessar Conta</h1>
     <form class="form" name="loginForm" role="form" ng-submit="login()">
         <div layout="row">
@@ -36,8 +21,8 @@
                     </div>
                 </md-input-container>
         </div>
-        <div class="btns-login">
-            <button class="btn btn-red" ng-click="cancel('cancel')" type="button">Cancelar</button>
+        <div class="modal-btns">
+            <button class="btn btn-red btn-hide-mobile" ng-click="cancel('cancel')" type="button">Cancelar</button>
             <button class="btn btn-blue" ng-disabled="loginForm.$invalid" ng-click="answer('login')" type="submit">Entrar</button>
         </div>
     </form>

@@ -8,9 +8,6 @@
     display: none;
 }
 
-body {
-    background-color: #E1E1E1;
-}
 .page {
     display: grid;
     grid-template-areas: "header" "nav" "content";

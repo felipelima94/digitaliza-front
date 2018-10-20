@@ -54,8 +54,8 @@
 /* content config */
 .content {
     position: relative;
-    width: 800px;
-    padding-bottom: 30px;
+    max-width: 800px;
+    padding: 0 10px 30px 10px;
 }
 .content .title-content {
     margin: 15px 0 10px 35px;
@@ -79,4 +79,15 @@
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+}
+@media screen and (max-width: 876px) {
+    .head {
+        height: 220px;
+    }
+    .head .subtitle {
+        text-align: center;
+    }
+    .accessLinks {
+        top: 5px;
+    }
 }

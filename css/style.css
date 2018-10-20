@@ -1,3 +1,6 @@
+@import 'layout.css';
+@import 'layoutMobile.css';
+
 /* estilos genericos global */
 /* botões */
 .btn {
@@ -51,6 +54,20 @@
     background-size: auto 26px;
     background-repeat: no-repeat;
 }
+
+.btn-square-option {
+    width: 30px;
+    height: 30px;
+}
+.btn-edit {
+    background-position: 2px;
+    background-size: auto 22px;
+}
+.btn-delete {
+    background-position: -33px;
+    background-size: auto 22px;
+}
+
 .pointer {
     cursor: pointer;
 }
@@ -58,4 +75,15 @@
 /* links */
 .link-none {
     text-decoration: none;
+}
+
+/* modal */
+.modalLayout {
+    min-width: 500px;
+    /* height: 300px; */
+    padding: 20px;
+}
+.modal-btns {
+    display: flex;
+    justify-content: space-between;
 }
