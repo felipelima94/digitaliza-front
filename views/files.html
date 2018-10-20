@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <link type="text/css" rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/layoutMobile.css">
-<link type="text/css" rel="stylesheet" href="css/style.css">
+<!-- <link type="text/css" rel="stylesheet" href="css/style.css"> -->
 <link rel="stylesheet" href="css/menu.css">
 <link rel="stylesheet" href="css/modal.css">
 
@@ -75,38 +75,22 @@
 			</div>
 
 			<div ng-repeat="file in files | orderBy : myOrderByName |  filter : {name : inputSearch }" class="tr">
-				<a ng-href="{{file.link}}" target="{{file.target}}">
+				
 					<div class="rowTableFile" type="button">
 						<div class="td iconFile" style="background-image: url('{{file.type}}')"></div>
-						<div class="td">{{ file.name }}</div>
+						<div class="td">
+							<a class="link-none" ng-href="{{file.link}}" target="{{file.target}}">
+								{{ file.name }}
+							</a>
+						</div>
 						<div class="td">{{ file.author }}</div>
 						<div class="td">{{ file.date }}</div>
 						<div class="td">{{ file.size }}</div>
+						<div class="td"><div class="btn-square-option btn-blue btn-edit pointer" ng-click="editFile($event, file)"></div></div>
+						<div class="td"><div class="btn-square-option btn-red btn-delete pointer" ng-click="deleteFile($event, file)"></div></div>
 					</div>
-				</a>
 			</div>
 
 		</div> <!-- tableFiles -->
 	</section>
-</div>
-
-<!-- Cria o modal para cada item do menu -->
-<div id="mascara"></div>
-<div id="novapasta" class="window">
-	<div>
-		<h4>Criar nova pasta</h4>
-		<a href="#" class="fechar">X</a>
-	</div>
-</div>
-<div id="upload" class="window">
-	<div>
-		<h4>Enviar novos arquivos</h4>
-		<a href="#" class="fechar">X</a>
-	</div>
-</div>
-<div id="digitalizar" class="window">
-	<div>
-		<h4>Digitalizar</h4>
-		<a href="#" class="fechar">X</a>
-	</div>
 </div>

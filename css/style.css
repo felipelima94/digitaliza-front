@@ -33,6 +33,29 @@
 .btn-red:focus { 
     background-color: rgb(255, 60, 30);
 }
+.btn-square-option {
+    width: 36px;
+    height: 36px;
+    border-radius: 5px;
+    box-shadow: #222222 0 0 5px;
+}
+.btn-edit {
+    background-image: url('../img/Groupe\ 152.png');
+    background-position: 5px;
+    background-size: auto 26px;
+    background-repeat: no-repeat;
+}
+.btn-delete {
+    background-image: url('../img/Groupe\ 152.png');
+    background-position: -37px;
+    background-size: auto 26px;
+    background-repeat: no-repeat;
+}
 .pointer {
     cursor: pointer;
+}
+
+/* links */
+.link-none {
+    text-decoration: none;
 }

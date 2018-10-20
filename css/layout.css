@@ -181,13 +181,10 @@ body {
 .tableFiles .tr:nth-child(odd) {
     background-color: #F9F9F9F9;
 }
-.tableFiles .tr a {
-    text-decoration: none;
-}
 .tableFiles .rowTableFile {
     height: 46px;
     display: grid;
-    grid-template-columns: 55px 2fr 1fr 1fr 1fr;
+    grid-template-columns: 55px 2fr 1fr 1fr 1fr 46px 46px;
     align-items: center;
     font-size: 1em;
     color: #666666;
@@ -197,6 +194,9 @@ body {
     overflow: hidden;
     display: inline-block;
     vertical-align: middle;
+}
+.td a {
+    color: #666666;
 }
 .tableFiles .rowTableFile .iconFile {
     height: 46px;

@@ -61,7 +61,7 @@
         padding: 0;
     }
     .tableFiles .rowTableFile {
-        grid-template-columns: 55px 2fr 1fr;
+        grid-template-columns: 2fr 1fr 46px 46px 2px;
         grid-gap: 10px;
     }
     .tableFiles .rowTableFile .td {
@@ -70,6 +70,9 @@
         vertical-align: middle;
     }
     .rowTableFile .td:nth-child(n+3):nth-child(-n+4) {
+        display: none;
+    }
+    .rowTableFile .td:nth-child(1) {
         display: none;
     }
     .rowTableFile .td:last-child {
