@@ -34,6 +34,9 @@
         width: 50px;
         height: 50px;
     }
+    .rightBar .userInfo {
+        height: 75px;
+    }
     .header .search {
         display: none
     }
@@ -64,7 +67,7 @@
     }
     .tableFiles .rowTableFile {
         grid-template-columns: 46px 2fr 1fr 40px 40px;
-        grid-gap: 10px;
+        grid-gap: 5px;
     }
     .tableFiles .rowTableFile .td {
         padding: 0 5px;
@@ -74,12 +77,6 @@
     .rowTableFile .td:nth-child(n+3):nth-child(-n+4) {
         display: none;
     }
-    /* .rowTableFile .td:nth-child(1) {
-        display: none;
-    } */
-    /* .rowTableFile .td:nth-child(n+6) {
-        float: right;
-    } */
     .tableFiles .rowTableFile .iconFile {
         width: 55px;
     }

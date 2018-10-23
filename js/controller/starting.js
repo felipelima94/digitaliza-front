@@ -19,7 +19,7 @@ angular.module('app').config(function ($qProvider) {
 	}
 	else {
 		$scope.template = {
-			title: "Sobre a Empresa",
+			title: "Sobre o Projeto",
 			url: "/views/home.html"
 		};
 	}
