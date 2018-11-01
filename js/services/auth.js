@@ -21,6 +21,9 @@
             delete: (url, data) => {
                 return http.delete(url, data, headers)
             },
+            postdelete: (url, data) => {
+                return http.post(url, data, headers)
+            },
             getUser: function () {
                 return http.post('/get-details', null, headers)
                 .then( response => {

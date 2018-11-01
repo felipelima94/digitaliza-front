@@ -385,15 +385,15 @@ angular.module('app')
 	
 		$mdDialog.show(confirm).then(function() {
 			if(file.edit == 'folder') {
-				auth.delete('/pasta/'+file.id, file).then(response => {
-					$route.reload()				
+				auth.postdelete('/pasta/delete/'+file.id, file).then(response => {
+					$scope.getFolders(self.session.storage)
 				}, error => {
 					$scope.errorToast()
 					console.error(error);
 				})
 			} else {
-				auth.delete('/documento/'+file.id, file).then(response => {
-					$route.reload()
+				auth.postdelete('/documento/delete/'+file.id, file).then(response => {
+					$scope.getFolders(self.session.storage)
 				}, error => {
 					$scope.errorToast()
 					console.error(error);
@@ -436,15 +436,26 @@ angular.module('app')
 		  .cancel('Cancelar');
 	
 		$mdDialog.show(confirm).then(function(result) {
-			if(file.edit == 'folder')
-				file.name = result
-			else
-				file.name = result+'.'+tempType;
-			$scope.status = 'You decided to name your dog ' + result + '.';
-		}, function() {
-		  $scope.status = 'You didn\'t name your dog.';
+			if(file.edit == 'folder') {
+				file.nome = result
+				auth.put('/pasta/'+file.id, file).then(response => {
+					console.log(response)
+					$scope.getFolders(self.session.storage)
+					$route.reload()
+				})
+			} else {
+				file.nome_arquivo = result+'.'+tempType;
+				auth.put('/documento/'+file.id, file).then(response => {
+					console.log(response)
+					$scope.getFolders(self.session.storage)
+					
+				}, error => {
+					console.error(error)
+				})
+			}
+
 			$scope.errorToast = function() {
-			
+		
 				$mdToast.show(
 				$mdToast.simple()
 					.textContent('Erro ao excluir!')
@@ -452,6 +463,9 @@ angular.module('app')
 					.hideDelay(5000)
 				);
 			};
+		}, function() {
+		  $scope.status = 'You didn\'t name your dog.';
+			
 		});
 	};
 });
