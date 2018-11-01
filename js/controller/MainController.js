@@ -373,18 +373,45 @@ angular.module('app')
 	
 	$scope.deleteFile = function(ev, file) {
 		// Appending dialog to document.body to cover sidenav in docs app
-		var confirm = $mdDialog.confirm()
+			console.log(file)
+			var confirm = $mdDialog.confirm()
 			  .title('Excluir')
-			  .textContent(file.name)
+			  .textContent('Tem certeza disso?')
+			  .textContent('Tem certeza que deseja excluir '+file.name+'?')
 			  .ariaLabel('delete file')
 			  .targetEvent(ev)
 			  .ok('Excluir')
 			  .cancel('Cancelar');
 	
 		$mdDialog.show(confirm).then(function() {
-		  $scope.status = 'You decided to get rid of your debt.';
+			if(file.edit == 'folder') {
+				auth.delete('/pasta/'+file.id, file).then(response => {
+					$route.reload()				
+				}, error => {
+					$scope.errorToast()
+					console.error(error);
+				})
+			} else {
+				auth.delete('/documento/'+file.id, file).then(response => {
+					$route.reload()
+				}, error => {
+					$scope.errorToast()
+					console.error(error);
+				})
+			}
+
+			$scope.errorToast = function() {
+		
+				$mdToast.show(
+				$mdToast.simple()
+					.textContent('Erro ao excluir!')
+					.position('bottom right ')
+					.hideDelay(5000)
+				);
+			};
 		}, function() {
 		//   $scope.status = 'You decided to keep your debt.';
+			
 		});
 	};
 
@@ -416,6 +443,15 @@ angular.module('app')
 			$scope.status = 'You decided to name your dog ' + result + '.';
 		}, function() {
 		  $scope.status = 'You didn\'t name your dog.';
+			$scope.errorToast = function() {
+			
+				$mdToast.show(
+				$mdToast.simple()
+					.textContent('Erro ao excluir!')
+					.position('bottom right ')
+					.hideDelay(5000)
+				);
+			};
 		});
 	};
 });
