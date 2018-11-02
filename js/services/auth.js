@@ -43,12 +43,13 @@
                 });
             },
             auth: () => {
-                http.post('/get-details', null, headers)
+                return http.post('/get-details', null, headers)
                 .then( response => {
-                    console.log(headers)
-                    $location.path('/files');
+                    return response;
                 }, error => { 
                     sessionStorage.removeItem('token');
+                    $location.path('/home')
+                    return false;
                 })
             },
             headers: () => headers

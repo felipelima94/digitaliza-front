@@ -1,0 +1,83 @@
+<div class="form-gerenciar" ng-controller="gerenciar-empresa">
+    <h1>Gerenciar Empresa</h1>
+    <form role="form" name="projectForm" ng-submit="submitEmpresa()">
+        <div>
+            <md-input-container class="md-block">
+                <label>E-mail</label>
+                <input type="text" required name="email" ng-model="formEmpresa.email" minlength="6" maxlength="100"  ng-pattern="/^.+@.+\..+$/">
+                <div class="hint">email@exemple.com</div>
+                <div ng-messages="projectForm.email.$error">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        Seu email deve conter de 6 a 100 caracteres e ser um endereço válido
+                    </div>
+                </div>
+            </md-input-container>
+
+            <div layout="row">
+                <md-input-container flex="50">
+                    <label>Telefone 1</label>
+                    <input type="text" required name="telefone1" ng-model="formEmpresa.telefone1" ui-br-phone-number-mask="areaCode">
+                    <!-- <div class="hint" ng-invalid="formEmpresa.telefone1">(##) ####-#### ou (##) #####-####</div> -->
+                    <div ng-messages="projectForm.telefone1.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="50">
+                    <label>Telefone 2</label>
+                    <!-- <div class="hint">(##) ####-#### ou (##) #####-####</div> -->
+                    <input type="text" name="telefone2" ng-model="formEmpresa.telefone2" ui-br-phone-number-mask="areaCode">
+                </md-input-container>
+            </div>
+
+            <div layout="row">
+                <md-input-container flex="30">
+                    <label>CEP</label>
+                    <input type="text" required name="cep" ng-model="formEmpresa.cep" ui-br-cep-mask>
+                    <div ng-messages="projectForm.cep.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="60">
+                    <label>Rua, Av.</label>
+                    <input type="text" required name="endereco" ng-model="formEmpresa.endereco">
+                    <div ng-messages="projectForm.endereco.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="15">
+                    <label>Número</label>
+                    <input type="text" required name="numero" ng-model="formEmpresa.numero">
+                    <div ng-messages="projectForm.numero.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Cidade</label>
+                    <input type="text" required name="cidade" ng-model="formEmpresa.cidade">
+                    <div ng-messages="projectForm.cidade.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+                
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Estado</label>
+                    <md-select required name="uf" ng-model="formEmpresa.uf">
+                        <md-option ng-repeat="estado in estados" value="{{estado.sigla}}">
+                            {{estado.name}}
+                        </md-option>
+                    </md-select>
+                    <div ng-messages="projectForm.estado.$error">
+                            <div ng-message="required">Este campo é obrigatório.</div>
+                        </div>
+                </md-input-container>
+            </div>
+        </div>
+        <button class="btn btn-blue" ng-disabled="projectForm.$invalid" type="submit">Seguinte</button>
+    </form>
+</div>

@@ -1,0 +1,20 @@
+<div ng-controller="userControll" class="userInfo" ng-click="showSideBar()">
+    <div class="userName">{{ user.first_name }}</div>
+    <div class="userPhoto" style="background-image: url('{{user.pic}}')"></div>
+</div>
+<!-- menu gerenciamento de conta -->
+<div class="rightBar" ng-controller="userControll">
+    <div class="userInfo" ng-click="hideRightBar()">
+        <div class="userName">{{ user.first_name }} {{ user.last_name }}</div>
+        <div class="userPhoto" ng-click="showRightBar()" style="background-image: url('{{user.pic}}')"></div>
+    </div>
+    <div class="rightBar-menu">
+        <h2>Administrar Serviço</h2>
+        <ul>
+            <li ng-click="gerenciarEmpresa()" ng-if="user.master > 0">Gerenciar Empresa</li>
+            <li ng-click="gerenciarUsuarios()" ng-if="user.master > 0">Gerenciar Usuarios</li>
+            <li ng-click="gerenciarConta()">Gerenciar Conta</li>
+            <li ng-click="logout()">Sair</li>
+        </ul>
+    </div>
+</div>

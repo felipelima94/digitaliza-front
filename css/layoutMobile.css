@@ -19,6 +19,15 @@
         background: url('../img/menuIcon.png') no-repeat center;
         background-size: contain;
     }
+    .header .home-icon {
+        grid-area: menu;
+        display: block;
+        width: 65px;
+        height: 65px;
+        background: url('/img/home-icon.png') no-repeat center;
+        background-size: auto 45px;
+        cursor: pointer;
+    }
     .header .logo {
         grid-area: logo;
         height: 65px;
@@ -33,6 +42,9 @@
     .header .userInfo .userPhoto {
         width: 50px;
         height: 50px;
+    }
+    .rightBar .userInfo .userName {
+        display: block;
     }
     .rightBar .userInfo {
         height: 75px;

@@ -16,36 +16,16 @@
 			<div id="mobileMenu" class="dropdown-content">
 				<button ng-click="showPrompt($event)" rel="modal"><div class="icon-folder"></div><p>Nova Pasta</p></button>
 				<button ng-click="simpleUpload($event)" rel="modal"><div class="icon-doc"></div><p>Enviar arquivos</p></button>
-				<button ng-click="digitalizaUpload($event)" rel="modal"><div class="icon-digi"></div><p>Nova Digitalizar</p></button>
+				<button ng-click="digitalizaUpload($event)" rel="modal"><div class="icon-digi"></div><p>Nova Digitalização</p></button>
 			</div>
 		</nav>
-		<div class="logo">
-			<!-- <img src="img/logo.png" alt="Logo"> -->
-		</div>
+		<div class="logo"> <!-- logo --> </div>
 		<form class="middle search" name="searchForm" ng-submit="search()">
 			<input type="text" name="q" ng-model="searchField" class="inputSearch" placeholder="Pesquisar" />
 			<input type="submit" class="btnBuscar" value="">
 		</form>
-		<div ng-controller="userControll" class="userInfo">
-			<div class="userName">{{ user.first_name }}</div>
-			<div class="userPhoto" style="background-image: url('{{user.pic}}')"></div>
-		</div>
+		<user-prifle-menu></user-prifle-menu>
 	</header>
-	<!-- menu gerenciamento de conta -->
-	<div class="rightBar" ng-controller="userControll">
-		<div class="userInfo" ng-click="hideRightBar()">
-			<div class="userName">{{ user.first_name }} {{ user.last_name }}</div>
-			<div class="userPhoto" ng-click="showRightBar()" style="background-image: url('{{user.pic}}')"></div>
-		</div>
-		<div class="rightBar-menu">
-			<h2>Administrar Serviço</h2>
-			<ul>
-				<li>Gerenciar Empresa</li>
-				<li>Gerenciar Conta</li>
-				<li ng-click="logout()">Sair</li>
-			</ul>
-		</div>
-	</div>
 
 	<form class="mobile search" name="searchForm" ng-submit="search()">
 		<input type="text" name="q" ng-model="searchField" class="inputSearch" placeholder="Pesquisar" />
@@ -59,7 +39,7 @@
 				<div id="myDropdown" class="dropdown-content">
 					<button ng-click="showPrompt($event)" rel="modal"><div class="icon-folder"></div><p>Nova Pasta</p></button>
 					<button ng-click="simpleUpload($event)" rel="modal"><div class="icon-doc"></div><p>Enviar arquivos</p></button>
-					<button ng-click="digitalizaUpload($event)" rel="modal"><div class="icon-digi"></div><p>Nova Digitalizar</p></button>
+					<button ng-click="digitalizaUpload($event)" rel="modal"><div class="icon-digi"></div><p>Nova Digitalização</p></button>
 				</div>
 		</div>
 		<div class="navegacao">

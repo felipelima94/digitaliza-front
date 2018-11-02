@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="/css/menu.css">
+<link rel="stylesheet" href="css/modal.css">
+<!-- controller gerenciador empresa -->
+
+<div ng-controller="gerenciadorController">
+    <header class="header">
+		<!-- <nav id="home-icon" ng-click="goToFiles()" class="home-icon"></nav> -->
+		<nav></nav>
+        
+        <div class="logo" ng-click="goToFiles()" style="cursor: pointer"></div>
+        
+		<user-prifle-menu> <!-- menu gerenciador de usuario --></user-prifle-menu>
+	</header>
+    <div ng-include="form.url"></div>
+</div>

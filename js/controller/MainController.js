@@ -2,35 +2,6 @@ self = this;
 
 angular.module('app')
 .controller('managerFiles', function($scope, $routeParams, $mdDialog, http, auth, date_Helper, $location){
-	
-	var toglerightBar = false;
-
-	$scope.hideRightBar = () => {
-		if(toglerightBar) { 
-			document.querySelector('.rightBar').style.display = 'none';
-			toglerightBar = !toglerightBar;
-		}
-	}
-	document.querySelector('.userInfo').addEventListener('click', (e) => {
-		if(!toglerightBar) {
-			document.querySelector('.rightBar').style.display = 'block';
-			toglerightBar = !toglerightBar;
-		} else if(toglerightBar) { 
-			document.querySelector('.rightBar').style.display = 'none';
-			toglerightBar = !toglerightBar;
-		}
-		e.stopPropagation();
-	})
-	document.querySelector('.rightBar').addEventListener('click', (e) => {
-		e.stopPropagation();
-	})
-	document.querySelector('body').addEventListener('click', () => {
-		if(toglerightBar) {
-			document.querySelector('.rightBar').style.display = 'none'
-			toglerightBar = !$scope.rightBar;
-		}
-	});
-
 	self.headers = {
 		headers: {
 			"Accept": 'application/json',

@@ -202,3 +202,9 @@
     background-repeat: no-repeat;
     background-size: auto 30px;
 }
+
+/* Formularios de gerenciamentos */
+.form-gerenciar {
+    max-width: 800px;
+    margin: 25px auto;
+}

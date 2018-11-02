@@ -12,6 +12,9 @@ var app = angular.module("app", ["ngRoute", "ngMaterial", 'ngMessages', 'ui.util
             .when('/cadastrar', {
                 templateUrl: 'views/cadastrar.html'
             })
+            .when('/', {
+                templateUrl: "views/content.html"
+            })
             .when('/home', {
                 templateUrl: "views/content.html"
             })
@@ -19,7 +22,10 @@ var app = angular.module("app", ["ngRoute", "ngMaterial", 'ngMessages', 'ui.util
                 redirectTo : '/cadastro/empresa'
             })
             .when('/cadastro/:opt', {
-                templateUrl: "views/content.html"
+                templateUrl: "/views/content.html"
+            })
+            .when('/gerenciar/:opt', {
+                templateUrl: "/views/gerenciar/gerenciar.html"
             })
             .otherwise({redirectTo : '/home'});
             
