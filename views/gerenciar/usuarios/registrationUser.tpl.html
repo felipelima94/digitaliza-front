@@ -1,11 +1,6 @@
-<style>
-.userRegistration {
-    /* width: 800px; */
-}
-</style>
-<div class="modalLayout userRegistration">
+<div class="modalLayout">
     <h2>Gerenciar usuário</h2>
-    <form role="form" name="projectForm" ng-submit="submitEmpresa()">
+    <form role="form" name="projectForm" ng-submit="save()">
         <div>
             <div layout="row">
                 <md-input-container flex="60">
@@ -25,7 +20,7 @@
             </div>
 
             <div layout="row">
-                <div>Sufix</div>
+                <div class="gerenciar-sufix">{{sufix}}</div>
                 <md-input-container flex="60">
                     <label>Nome de usuário</label>
                     <input type="text" required name="user_name" ng-model="formUser.user_name">
@@ -38,24 +33,39 @@
             <div layout="row">
                 <md-input-container flex="60">
                     <label>Senha</label>
-                    <input type="password" name="password" ng-model="formUser.password">
+                    <input type="password" minlength="8" name="password" ng-model="formUser.password">
+                    <div ng-messages="projectForm.password.$error">
+                        <div ng-message="minlength">Deve ter no minimo 8 caracteres</div>
+                    </div>
                 </md-input-container>
                 <md-input-container flex="60">
                     <label>Repitir senha</label>
-                    <input type="password" name="c_password" ng-model="formUser.c_password">
+                    <input type="password" name="c_password" ng-model="formUser.c_password" equal="{{formUser.password}}">
+                    <div ng-if="formUser.c_password != formUser.password && formUser.c_password">
+                        <div class="md-input-message-animation ng-scope">está senha deve ser igual a anterior</div>
+                    </div>
                 </md-input-container>
             </div>
 
             <div layout="row">
-                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="formUser.masterView" class="md-primary">
+                <md-checkbox md-no-ink ng-model="formUser.masterView" class="md-primary">
                     Master
                 </md-checkbox>
-                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="formUser.statusView" class="md-primary">
+                <md-checkbox md-no-ink ng-model="formUser.statusView" class="md-primary">
                     Ativo
                 </md-checkbox>
             </div>
 
         </div>
-        <button class="btn btn-blue right" ng-disabled="projectForm.$invalid" type="submit">Salvar</button>
+        <div>
+            <button class="btn btn-red left" type="submit" ng-click="cancelar()" >Cancelar</button>
+            <button class="btn btn-blue right" 
+                    ng-disabled="projectForm.$invalid ||
+                                ((formUser.id == null) && (formUser.password == '' || formUser.password == null)) ||
+                                (formUser.password != formUser.c_password)" 
+                    type="submit" >
+                        Salvar
+            </button>
+        </div>
     </form>
 </div>

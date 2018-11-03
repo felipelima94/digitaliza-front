@@ -226,6 +226,17 @@ h2 {
     justify-content: space-between;
 }
 
+.gerenciar-sufix {
+    margin-top: 20px;
+    margin-right: 5px;
+    background:  #EEEEEE;
+    padding: 5px 10px;
+    max-height: 30px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    color: #666666
+}
+
 .table-gerenciar .th {
     color: #707070;
     font-weight: bold;
