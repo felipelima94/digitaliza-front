@@ -104,4 +104,13 @@
     .btn-hide-mobile {
         display: none !important;
     }
+
+    .table-gerenciar .rowTable {
+        height: 46px;
+        display: grid;
+        grid-template-columns: 0fr 1fr 0fr 0fr 0fr 46px 46px;
+        align-items: center;
+        font-size: 1em;
+        color: #666666;
+    }
 }

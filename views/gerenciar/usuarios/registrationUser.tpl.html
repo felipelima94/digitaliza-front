@@ -1,0 +1,61 @@
+<style>
+.userRegistration {
+    /* width: 800px; */
+}
+</style>
+<div class="modalLayout userRegistration">
+    <h2>Gerenciar usuário</h2>
+    <form role="form" name="projectForm" ng-submit="submitEmpresa()">
+        <div>
+            <div layout="row">
+                <md-input-container flex="60">
+                    <label>Nome</label>
+                    <input type="text" required name="first_name" ng-model="formUser.first_name">
+                    <div ng-messages="projectForm.first_name.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex="60">
+                    <label>Sobrenome</label>
+                    <input type="text" required name="last_name" ng-model="formUser.last_name">
+                    <div ng-messages="projectForm.last_name.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout="row">
+                <div>Sufix</div>
+                <md-input-container flex="60">
+                    <label>Nome de usuário</label>
+                    <input type="text" required name="user_name" ng-model="formUser.user_name">
+                    <div ng-messages="projectForm.user_name.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout="row">
+                <md-input-container flex="60">
+                    <label>Senha</label>
+                    <input type="password" name="password" ng-model="formUser.password">
+                </md-input-container>
+                <md-input-container flex="60">
+                    <label>Repitir senha</label>
+                    <input type="password" name="c_password" ng-model="formUser.c_password">
+                </md-input-container>
+            </div>
+
+            <div layout="row">
+                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="formUser.masterView" class="md-primary">
+                    Master
+                </md-checkbox>
+                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="formUser.statusView" class="md-primary">
+                    Ativo
+                </md-checkbox>
+            </div>
+
+        </div>
+        <button class="btn btn-blue right" ng-disabled="projectForm.$invalid" type="submit">Salvar</button>
+    </form>
+</div>

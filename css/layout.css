@@ -4,6 +4,15 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+h1 {
+    color: #222222;
+    font-size: 2em;
+}
+
+h2 {
+    margin: 5px 0 10px 0;
+}
+
 .page .mobile {
     display: none;
 }
@@ -141,6 +150,7 @@
 .rightBar-menu li:hover {
     background-color: #E1E1E1;
     cursor: pointer;
+    border-radius: 5px;
 }
 /* menu Navegacao */
 .nav {
@@ -205,6 +215,49 @@
 
 /* Formularios de gerenciamentos */
 .form-gerenciar {
-    max-width: 800px;
+    max-width: 900px;
     margin: 25px auto;
+    padding: 0 15px;
+}
+
+.gerenciamento-sub-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-gerenciar .th {
+    color: #707070;
+    font-weight: bold;
+}
+.table-gerenciar .tr:nth-child(even) {
+    background-color: #EEEEEE;
+}
+.table-gerenciar .tr:nth-child(odd) {
+    background-color: #F9F9F9F9;
+}
+.table-gerenciar .rowTable {
+    height: 46px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 75px 75px 1fr 46px 46px;
+    align-items: center;
+    font-size: 1em;
+    color: #666666;
+}
+.table-gerenciar .td {
+    padding: 0 0 0 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+}
+.td a {
+    color: #666666;
+}
+.table-gerenciar .rowTable .iconFile {
+    height: 46px;
+    width: 55px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 30px;
 }

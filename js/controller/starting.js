@@ -4,9 +4,10 @@ angular.module('app').config(function ($qProvider) {
 .controller("starting", ($scope, $routeParams, $http, $mdDialog, auth, http, $location) => {
 
 	// verifica se está logado
-	if (auth.auth()) {
-		$location.path('/files');
-	}
+	auth.auth().then(response => {
+		response ? $location.path('/files') : null
+	})
+	
 
 	if($routeParams.opt == "representante") {
 		$scope.template = {

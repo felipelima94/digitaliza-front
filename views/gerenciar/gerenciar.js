@@ -10,13 +10,12 @@ angular.module('app').controller('gerenciadorController',
             $scope.form = { url: '/views/gerenciar/usuarios/gerenciar-usuarios.tpl.html'}
 
         } else if($routeParams.opt == "conta") {
-            $scope.form = { url: '/views/gerenciar/gerenciar-conta.tpl.html'}
+            $scope.form = { url: '/views/gerenciar/conta/gerenciar-conta.tpl.html'}
         }
         else {
             $scope.form = { url: '/views/gerenciar/empresa/gerenciar-empresa.tpl.html'}
 
         }
-
 
         $scope.goToFiles = () => {
             $location.url('/files')

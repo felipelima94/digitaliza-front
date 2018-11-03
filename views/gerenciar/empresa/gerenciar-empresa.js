@@ -5,12 +5,8 @@ angular.module('app').controller('gerenciar-empresa',
             let user = data;
             
             auth.get('/empresa-by-user/'+user.id).then(response => {
-                
                 $scope.formEmpresa = response.data;
-                console.log($scope.formEmpresa)
-                
             }, error => {
-                // window.location.href="/home";
                 console.error("Error::Unauthorised");
             })
         });

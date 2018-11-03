@@ -4,6 +4,7 @@
 /* estilos genericos global */
 /* botões */
 .btn {
+    max-height: 40px;
     padding: 5px 20px;
     border: none;
     border-radius: 5px;
@@ -88,6 +89,11 @@
     justify-content: space-between;
 }
 
+/* text */
+.text-center {
+    text-align: center;
+}
+
 .hint {
     /* Position the hint */
     position: absolute;
@@ -101,3 +107,6 @@
     /* Set our own color */
     color: grey; 
 }
+
+/* positions */
+.right { float: right; }

@@ -62,7 +62,7 @@
 
 			<div ng-repeat="file in files | orderBy : myOrderByName |  filter : {name : inputSearch }" class="tr">
 				
-					<div class="rowTableFile" type="button">
+					<div class="rowTableFile">
 						<div class="td iconFile" style="background-image: url('{{file.type}}')"></div>
 						<div class="td">
 							<a class="link-none" ng-href="{{file.link}}" target="{{file.target}}">

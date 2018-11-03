@@ -1,0 +1,37 @@
+<div class="form-gerenciar" ng-controller="gerenciarUsuarios">
+    <div class="gerenciamento-sub-head">
+        <h1>Gerenciar usuários</h1>
+        <button class="btn btn-blue" ng-click="regUser()">Novo</button>
+    </div>
+    <section class="content">
+        <div class="table-gerenciar">
+            
+            <div class="rowTable th">
+                <div class="td pointer" ng-click="orderByName(myOrderByName)">Nome {{ arrowOrder }}</div>
+                <div class="td">Usuário</div>
+                <div class="td text-center">Ativo</div>
+                <div class="td text-center">Master</div>
+                <div class="td">Modificação</div>
+            </div>
+
+            <div ng-repeat="user in users | orderBy : myOrderByName" class="tr">
+                
+                    <div class="rowTable">
+                        <div class="td">{{ user.first_name }}</div>
+                        <div class="td">{{ user.user_name }}</div>
+                        <div class="td text-center">
+                            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-disabled="true" ng-model="user.statusView" class="md-primary">
+                            </md-checkbox>
+                        </div>
+                        <div class="td text-center">
+                                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-disabled="true" ng-model="user.masterView" class="md-primary"></md-checkbox>
+                        </div>
+                        <div class="td">{{ user.modify }}</div>
+                        <div class="td"><div class="btn-square-option btn-blue btn-edit pointer" ng-click="regUser($event, user)"></div></div>
+                        <div class="td"><div class="btn-square-option btn-red btn-delete pointer" ng-click="deleteUser($event, user)"></div></div>
+                    </div>
+            </div>
+
+        </div> 
+    </section>
+</div>

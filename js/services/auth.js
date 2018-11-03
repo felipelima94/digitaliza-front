@@ -45,10 +45,10 @@
             auth: () => {
                 return http.post('/get-details', null, headers)
                 .then( response => {
-                    return response;
+                    return true;
                 }, error => { 
                     sessionStorage.removeItem('token');
-                    $location.path('/home')
+                    // $location.path('/home')
                     return false;
                 })
             },
