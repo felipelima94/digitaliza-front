@@ -1,7 +1,7 @@
 self = this;
 
 angular.module('app')
-.controller('managerFiles', function($scope, $routeParams, $mdDialog, http, auth, date_Helper, $location){
+.controller('managerFiles', function($scope, $routeParams, $mdDialog, http, auth, date_Helper, $location, sessionStore){
 	self.headers = {
 		headers: {
 			"Accept": 'application/json',
@@ -59,10 +59,13 @@ angular.module('app')
 	auth.getUser().then(data => {
 		let user = data;
 		self.session.usuario_id = user.id;
+
+		sessionStore.setUser(user)
 		
 		http.get('/empresa-by-user/'+user.id, self.headers).then(response => {
 			
 			data = response.data;
+			sessionStore.setEmpresa(data)
 			
 			self.session.empresa_id = data.empresa_id;
 			let storage = data.storage
@@ -462,5 +465,4 @@ function getSize(value, pass=0) {
 	if(value > 100)
 		size = value.toFixed(1)
 	return size+' '+prefix[pass]
-	return value
 }
