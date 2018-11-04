@@ -54,15 +54,14 @@
     }
     .page .search {
         margin-top: 15px;
-        width: 100%;
+        width: unset;
     }
-    .search .inputSearch {
-        width: 80%;
+    .inputSearch {
+        width: unset !important;
     }
     .search .btnBuscar {
         background-color: #6699FF;
     }
-
 
     /* gambiarra para mostrar a barra de pesquisa */
     .page .mobile {
@@ -103,6 +102,19 @@
 
     .btn-hide-mobile {
         display: none !important;
+    }
+
+    .btn-back {
+        margin: 15px;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        box-shadow: rgba(0,0,0,0.5) 0 0 5px;
+        background-image: url("/img/icon_back.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 36px;
+        background-color: #FFF;
     }
 
     .table-gerenciar .rowTable {

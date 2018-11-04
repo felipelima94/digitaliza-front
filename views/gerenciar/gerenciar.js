@@ -4,10 +4,20 @@ angular.module('app').controller('gerenciadorController',
         auth.auth();
 
         if($routeParams.opt == "empresa") {
-            $scope.form = { url: '/views/gerenciar/empresa/gerenciar-empresa.tpl.html'}
+            auth.getUser().then(data => {
+                if(data.master < 1)
+                    $location.url('/files')
+                else
+                $scope.form = { url: '/views/gerenciar/empresa/gerenciar-empresa.tpl.html'}
+            })
 
         } else if($routeParams.opt == "usuarios"){
-            $scope.form = { url: '/views/gerenciar/usuarios/gerenciar-usuarios.tpl.html'}
+            auth.getUser().then(data => {
+                if(data.master < 1)
+                    $location.url('/files')
+                else
+                $scope.form = { url: '/views/gerenciar/usuarios/gerenciar-usuarios.tpl.html'}
+            })
 
         } else if($routeParams.opt == "conta") {
             $scope.form = { url: '/views/gerenciar/conta/gerenciar-conta.tpl.html'}

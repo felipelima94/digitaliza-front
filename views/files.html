@@ -27,10 +27,13 @@
 		<user-prifle-menu></user-prifle-menu>
 	</header>
 
-	<form class="mobile search" name="searchForm" ng-submit="search()">
-		<input type="text" name="q" ng-model="searchField" class="inputSearch" placeholder="Pesquisar" />
-		<input type="submit" class="btnBuscar" value="">
-	</form>
+	<div class="mobile">
+		<div class="btn-back" ng-click="goBack()"></div>
+		<form class="search" name="searchForm" ng-submit="search()">
+			<input type="text" name="q" ng-model="searchField" class="inputSearch" placeholder="Pesquisar" />
+			<input type="submit" class="btnBuscar" value="">
+		</form>
+	</div>
 
 	<!-- Menu gerenciamento -->
 	<nav class="nav">
@@ -43,7 +46,7 @@
 				</div>
 		</div>
 		<div class="navegacao">
-			<p><a href="/files">Home</a></p>
+			<p><a href="/files" ng-click="goHome()">Home</a></p>
 			<p ng-repeat="r in rastro">&nbsp;>&nbsp;<a ng-href="{{r.link}}">{{r.nome}}</a></p>
 		</div>
 	</nav>

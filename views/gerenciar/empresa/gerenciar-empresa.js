@@ -2,7 +2,9 @@ angular.module('app').controller('gerenciar-empresa',
     ($scope, $location, auth)=> {
         
         auth.getUser().then(data => {
-            let user = data;
+			let user = data;
+			if(user.master < 1)
+				$location.url('/files')
             
             auth.get('/empresa-by-user/'+user.id).then(response => {
                 $scope.formEmpresa = response.data;

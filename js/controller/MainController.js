@@ -1,7 +1,7 @@
 self = this;
 
 angular.module('app')
-.controller('managerFiles', function($scope, $routeParams, $mdDialog, http, auth, date_Helper, $location, sessionStore, $mdToast){
+.controller('managerFiles', function($scope, $route, $routeParams, $mdDialog, http, auth, date_Helper, $location, sessionStore, $mdToast){
 	self.headers = {
 		headers: {
 			"Accept": 'application/json',
@@ -13,6 +13,13 @@ angular.module('app')
 		usuario_id: "",
 		empresa_id: "",
 		storage: "",
+	}
+
+	
+	$scope.goHome = () => {
+		if($scope.searchField)
+			$route.reload()
+		$location.url('/files')
 	}
 
 	$scope.search = () => {
@@ -123,7 +130,25 @@ angular.module('app')
 					nome: r.nome
 				})
 			})
+			
 		})
+
+		auth.get('/pasta/full-rastro/'+storage).then(response => {
+			$scope.fullRastro = []
+			let rastro = response.data;
+			rastro.forEach(r => {
+				$scope.fullRastro.push({
+					link: '/files/'+r.id,
+					nome: r.nome
+				})
+			})
+			let lastIndex = $scope.fullRastro.length-2
+			$scope.goBack = function () {
+				if(lastIndex >= 0)
+				$location.url($scope.fullRastro[lastIndex].link)
+			}
+		})
+
 
 		$scope.files = []
 		http.get('/pasta/'+storage, self.headers)
