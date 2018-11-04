@@ -79,7 +79,6 @@ angular.module('app').controller('gerenciarUsuarios',
                         })
                     } else {
                         auth.put('/registerUser/'+userForm.id, userForm).then(response => {
-                            $location.url('/gerenciar/usuarios')
                             $mdDialog.hide();
                             $route.reload()
                         })

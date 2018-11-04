@@ -1,19 +1,23 @@
-angular.module('app').service('sessionStore',
-	function () {
-		let _user = [];
-		let _empresa = [];
+(function () {
+    "use strict";
 
-		function getUser() { return _user }
-		function setUser(user) { _user = user }
+    angular.module('app').service('sessionStore', function () {
+			let _user = [];
+			let _empresa = [];
 
-		function getEmpresa() { return _empresa }
-		function setEmpresa(empresa) { _empresa = empresa }
-		
-		return {
-			getUser: getUser,
-			setUser: setUser,
-			getEmpresa: getEmpresa,
-			setEmpresa: setEmpresa
-		}
+			function getUser() { return angular.copy(_user) }
+			function setUser(user) { _user = user }
 
-	})
+			function getEmpresa() { return _empresa }
+			function setEmpresa(empresa) { _empresa = empresa }
+			
+			return {
+				getUser: getUser,
+				setUser: setUser,
+				getEmpresa: getEmpresa,
+				setEmpresa: setEmpresa
+			}
+
+		})
+	}
+)()

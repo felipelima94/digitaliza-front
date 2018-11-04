@@ -1,0 +1,66 @@
+<div class="form-gerenciar" ng-controller="gerenciarConta">
+    <h2>Gerenciar conta</h2>
+    <form role="form" name="UserForm" enctype="multipart/form-data">
+        <div>
+            <div layout="row">
+                <md-input-container flex="60">
+                    <label>Foto</label>
+                    <input id="profile_pic" type="file" required name="file">
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container flex="60">
+                    <label>Nome</label>
+                    <input type="text" required name="first_name" ng-model="formUser.first_name">
+                    <div ng-messages="UserForm.first_name.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex="60">
+                    <label>Sobrenome</label>
+                    <input type="text" required name="last_name" ng-model="formUser.last_name">
+                    <div ng-messages="UserForm.last_name.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout="row">
+                <div class="gerenciar-sufix">{{sufix}}</div>
+                <md-input-container flex="60">
+                    <label>Nome de usuário</label>
+                    <input type="text" required name="user_name" ng-model="formUser.user_name">
+                    <div ng-messages="UserForm.user_name.$error">
+                        <div ng-message="required">Este campo é obrigatório.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout="row">
+                <md-input-container flex="60">
+                    <label>Senha</label>
+                    <input type="password" minlength="8" name="password" ng-model="formUser.password">
+                    <div ng-messages="UserForm.password.$error">
+                        <div ng-message="minlength">Deve ter no minimo 8 caracteres</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex="60">
+                    <label>Repitir senha</label>
+                    <input type="password" name="c_password" ng-model="formUser.c_password" equal="{{formUser.password}}">
+                    <div ng-if="formUser.c_password != formUser.password && formUser.c_password">
+                        <div class="md-input-message-animation ng-scope">está senha deve ser igual a anterior</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+        </div>
+        <button class="btn btn-blue right" 
+                ng-disabled="UserForm.$invalid ||
+                            ((formUser.id == null) && (formUser.password == '' || formUser.password == null)) ||
+                            (formUser.password != formUser.c_password)" 
+                ng-click="save()"
+                type="submit" >
+                    Salvar
+        </button>
+    </form>
+</div>
