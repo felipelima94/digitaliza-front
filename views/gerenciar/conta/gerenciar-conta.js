@@ -16,7 +16,6 @@ angular.module('app').controller('gerenciarConta',
 
         if(!(sessionStore.getUser().id > 0)) {
             auth.getUser().then(data => {
-                console.log(data)
                 sessionStore.setUser(data)
                 
                 auth.get('/empresa-by-user/'+sessionStore.getUser().id).then(response => {
@@ -48,7 +47,6 @@ angular.module('app').controller('gerenciarConta',
             data.append('pic', $('#profile_pic')[0].files[0])
             
             http.post('/user/'+userForm.id, data, headers).then(response => {
-                console.log(response)
                 $scope.successToast()
                 $route.reload()
             }, error => {

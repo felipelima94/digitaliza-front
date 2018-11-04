@@ -1,7 +1,7 @@
 self = this;
 
 angular.module('app')
-.controller('managerFiles', function($scope, $routeParams, $mdDialog, http, auth, date_Helper, $location, sessionStore){
+.controller('managerFiles', function($scope, $routeParams, $mdDialog, http, auth, date_Helper, $location, sessionStore, $mdToast){
 	self.headers = {
 		headers: {
 			"Accept": 'application/json',
@@ -18,9 +18,7 @@ angular.module('app')
 	$scope.search = () => {
 		let dataForm = { search: $scope.searchField }
 		if( $scope.searchField ) {
-			console.log("buscando: ", $scope.searchField);
 			http.post('/documento/search', dataForm, self.headers).then(response => {
-				console.log("data found: ", response)
 				docs = response.data
 
 				$scope.files = []
@@ -31,7 +29,6 @@ angular.module('app')
 
 					localArmazrnado = doc.local_armazenado.id
 					auth.get('/pasta/full-rastro/'+localArmazrnado).then(response => {
-						console.log("folder found", response)
 						data = response.data;
 						$scope.link = "/documentos/";
 						data.forEach(pasta => {
@@ -46,7 +43,6 @@ angular.module('app')
 							'link': http.serverUrl($scope.link+doc.nome_arquivo),
 							'target': '_blank'
 						})
-						console.log("files", $scope.files);
 					})
 				})
 			})
@@ -116,7 +112,6 @@ angular.module('app')
 	//     }
 	// ];
 	$scope.getFolders = (storage) => {
-		console.log(storage)
 		$scope.rastro = [];
 		http.get('/pasta/rastro/'+storage, self.headers)
 		.then(response => {
@@ -235,7 +230,6 @@ angular.module('app')
 			data.append('local_armazenado', self.session.storage);
 			data.append('file', $('#simpleUploadField')[0].files[0])
 			// data.append('file', $scope.simpleUpload.file);
-			console.log($('#simpleUploadField')[0].files[0]);
 			
 			
 			
@@ -248,8 +242,6 @@ angular.module('app')
 			if(answer == 'upload') {
 
 				http.post('/documento', data, headers).then(response => {
-					console.log("sending");
-					console.log(response);
 					$scope.hide();
 					$route.reload()
 					
@@ -310,7 +302,6 @@ angular.module('app')
 				data.append('images[]', $('#digitalizaUploadField')[0].files[i])
 			}
 
-			console.log($('#digitalizaUploadField')[0].files[0]);
 			
 			headers ={headers: {
 				"Authorization": JSON.parse(sessionStorage.getItem('token')),
@@ -319,8 +310,6 @@ angular.module('app')
 			
 			if(answer == 'upload') {
 				http.post('/documento/digitaliza', data, headers).then(response => {
-					console.log("sending");
-					console.log(response);
 					$scope.hide();
 					$route.reload()
 					
@@ -347,7 +336,6 @@ angular.module('app')
 	
 	$scope.deleteFile = function(ev, file) {
 		// Appending dialog to document.body to cover sidenav in docs app
-			console.log(file)
 			var confirm = $mdDialog.confirm()
 			  .title('Excluir')
 			  .textContent('Tem certeza disso?')
@@ -413,14 +401,12 @@ angular.module('app')
 			if(file.edit == 'folder') {
 				file.nome = result
 				auth.put('/pasta/'+file.id, file).then(response => {
-					console.log(response)
 					$scope.getFolders(self.session.storage)
 					$route.reload()
 				})
 			} else {
 				file.nome_arquivo = result+'.'+tempType;
 				auth.put('/documento/'+file.id, file).then(response => {
-					console.log(response)
 					$scope.getFolders(self.session.storage)
 					
 				}, error => {
