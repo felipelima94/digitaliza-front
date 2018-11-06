@@ -1,10 +1,11 @@
 angular.module('app').controller('gerenciarUsuarios',
-($scope, auth, $location, sessionStore, date_Helper, $mdDialog) => {
+($scope, auth, $location, sessionStore, date_Helper, $mdDialog, $route) => {
         
         $scope.users = []
         let getUsers = () => {
             auth.get('/usuarios-by-empresa/'+sessionStore.getEmpresa().empresa_id).then(response => {
                 $scope.users = response.data
+                console.log($scope.users);
                 $scope.users.map(user => {
                     user.statusView = user.status == 1 ? true : false,
                     user.masterView = user.master == 1 ? true : false,
@@ -85,6 +86,43 @@ angular.module('app').controller('gerenciarUsuarios',
                     }
                 }
             }
+        };
+
+        
+        $scope.deleteUser = function(ev, user) {
+            // Appending dialog to document.body to cover sidenav in docs app
+            console.log(user)
+                var confirm = $mdDialog.confirm()
+                  .title('Excluir')
+                  .textContent('Tem certeza disso?')
+                  .textContent('Tem certeza que deseja excluir '+user.first_name +' '+ user.last_name+'?')
+                  .ariaLabel('delete user')
+                  .targetEvent(ev)
+                  .ok('Excluir')
+                  .cancel('Cancelar');
+        
+            $mdDialog.show(confirm).then(function() {
+                auth.delete('/user/'+user.id, user).then(response => {
+                    $route.reload()
+                }, error => {
+                    $scope.errorToast()
+                    console.error(error);
+                })
+                
+                
+            }, function() {
+            //   $scope.status = 'You decided to keep your debt.';
+                
+            });
+            $scope.errorToast = function() {
+            
+                $mdToast.show(
+                $mdToast.simple()
+                    .textContent('Erro ao excluir!')
+                    .position('bottom right ')
+                    .hideDelay(5000)
+                );
+            };
         };
 
         $scope.arrowOrder = "↓"

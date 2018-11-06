@@ -14,7 +14,7 @@
                 <div class="td">Modificação</div>
             </div>
 
-            <div ng-repeat="user in users | orderBy : myOrderByName" class="tr">
+            <div ng-repeat="user in users | orderBy : myOrderByName | filter : {deleted: 0}" class="tr">
                 
                     <div class="rowTable">
                         <div class="td">{{ user.first_name }}</div>
