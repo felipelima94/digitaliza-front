@@ -15,7 +15,7 @@ angular.module('app').controller('gerenciar-empresa',
         
         $scope.submitEmpresa = () =>{
             auth.put('/empresa/'+$scope.formEmpresa.empresa_id, $scope.formEmpresa).then(response => {
-                console.log("sucesso")
+                // console.log("sucesso")
                 $location.reload()
             }, error => {
                 console.error(error)

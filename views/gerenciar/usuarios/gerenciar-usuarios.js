@@ -5,7 +5,7 @@ angular.module('app').controller('gerenciarUsuarios',
         let getUsers = () => {
             auth.get('/usuarios-by-empresa/'+sessionStore.getEmpresa().empresa_id).then(response => {
                 $scope.users = response.data
-                console.log($scope.users);
+                // console.log($scope.users);
                 $scope.users.map(user => {
                     user.statusView = user.status == 1 ? true : false,
                     user.masterView = user.master == 1 ? true : false,
@@ -91,7 +91,7 @@ angular.module('app').controller('gerenciarUsuarios',
         
         $scope.deleteUser = function(ev, user) {
             // Appending dialog to document.body to cover sidenav in docs app
-            console.log(user)
+            // console.log(user)
                 var confirm = $mdDialog.confirm()
                   .title('Excluir')
                   .textContent('Tem certeza disso?')
