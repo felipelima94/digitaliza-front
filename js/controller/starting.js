@@ -1,7 +1,7 @@
 angular.module('app').config(function ($qProvider) {
 		$qProvider.errorOnUnhandledRejections(false);
 })
-.controller("starting", ($scope, $routeParams, $http, $mdDialog, auth, http, $location) => {
+.controller("starting", ($scope, $routeParams, $http, $mdDialog, $mdToast, auth, http, $location) => {
 
 	// verifica se está logado
 	auth.auth().then(response => {
@@ -83,7 +83,17 @@ angular.module('app').config(function ($qProvider) {
 
 		}, err => {
 			console.error(err);
+			$scope.errorToast()
 		})
+		$scope.errorToast = function() {
+		
+			$mdToast.show(
+			  $mdToast.simple()
+				.textContent('Nome de usuário já registrado')
+				.position('bottom right ')
+				.hideDelay(5000)
+			);
+		};
 	}
 
 
