@@ -31,7 +31,8 @@ angular.module('app').config(function ($qProvider) {
 		$location.url("/home");
 	}
 
-	$scope.formEmpresa = {
+	$scope.formEmpresa = {}
+	dataTest = {
 		razao_social: "mesh transparent paradigms",
 		nome_fantasia: "Nienow-Ledner Inc",
 		cnpj: "73.183.337/0001-55",
