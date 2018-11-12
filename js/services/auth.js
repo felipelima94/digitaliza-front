@@ -29,7 +29,7 @@
                 .then( response => {
                     return response.data.success;
                 }, error => { 
-                    sessionStorage.removeItem('token');
+                    // sessionStorage.removeItem('token');
                     $location.path('/home');
                     console.error("Error :: Unauthorised");
                 })
