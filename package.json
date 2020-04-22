@@ -15,7 +15,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/senhoresdotcc/digitaliza-front#readme",
   "dependencies": {
-    "angular": "^1.7.3",
+    "angular": "^1.7.9",
     "angular-animate": "^1.7.3",
     "angular-aria": "^1.7.3",
     "angular-br-filters": "^0.7.0",
